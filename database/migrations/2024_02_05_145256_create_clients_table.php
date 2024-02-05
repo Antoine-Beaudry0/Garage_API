@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pageGarages', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->string('heuresOuverture', 255);
-            $table->string('heuresFermetures', 255);
-            $table->string('id_usager', 255);
+            $table->string('id_Usager', 255);
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pageGarages');
+        Schema::dropIfExists('clients');
     }
 };
