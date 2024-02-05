@@ -17,5 +17,10 @@ class DatabaseSeeder extends Seeder
         $this->call(ServicesSeeder::class);
         $this->call(RendezVousSeeder::class);
         $this->call(NotificationsSeeder::class);
+        $this->call(EmplacementSeeder::class);
+        $this->call(PageGaragesSeeder::class);
+        $this->call(RolesSeeder::class);
+        $this->call(ServiceRendezVousSeeder::class);
+        $this->call(StatutSeeder::class);
     }
 }

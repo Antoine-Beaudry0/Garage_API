@@ -62,3 +62,38 @@ Route::prefix('voitures')->group(function () {
     Route::put('/{id}', [VoituresController::class, 'update']);
     Route::delete('/{id}', [VoituresController::class, 'destroy']);
 });
+Route::prefix('roles')->group(function () {
+    Route::get('/', [RolesController::class, 'index']);
+    Route::post('/', [RolesController::class, 'store']);
+    Route::get('/{role}', [RolesController::class, 'show']);
+    Route::put('/{role}', [RolesController::class, 'update']);
+    Route::delete('/{role}', [RolesController::class, 'destroy']);
+});
+Route::prefix('pageGarages')->group(function () {
+    Route::get('/', [PageGaragesController::class, 'index']);
+    Route::post('/', [PageGaragesController::class, 'store']);
+    Route::get('/{pageGarage}', [PageGaragesController::class, 'show']);
+    Route::put('/{pageGarage}', [PageGaragesController::class, 'update']);
+    Route::delete('/{pageGarage}', [PageGaragesController::class, 'destroy']);
+});
+Route::prefix('emplacements')->group(function () {
+    Route::get('/', [EmplacementsController::class, 'index']);
+    Route::post('/', [EmplacementsController::class, 'store']);
+    Route::get('/{emplacement}', [EmplacementsController::class, 'show']);
+    Route::put('/{emplacement}', [EmplacementsController::class, 'update']);
+    Route::delete('/{emplacement}', [EmplacementsController::class, 'destroy']);
+});
+Route::prefix('serviceRendezVous')->group(function () {
+    Route::get('/', [ServiceRendezVousController::class, 'index']);
+    Route::post('/', [ServiceRendezVousController::class, 'store']);
+    Route::get('/{serviceRendezVous}', [ServiceRendezVousController::class, 'show']);
+    Route::put('/{serviceRendezVous}', [ServiceRendezVousController::class, 'update']);
+    Route::delete('/{serviceRendezVous}', [ServiceRendezVousController::class, 'destroy']);
+});
+Route::prefix('statuts')->group(function () {
+    Route::get('/', [StatutsController::class, 'index']);
+    Route::post('/', [StatutsController::class, 'store']);
+    Route::get('/{statut}', [StatutsController::class, 'show']);
+    Route::put('/{statut}', [StatutsController::class, 'update']);
+    Route::delete('/{statut}', [StatutsController::class, 'destroy']);
+});
