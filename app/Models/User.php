@@ -22,9 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'telephone',
-        'horaires_ouverture',
-        'nb_personne',
-        'id_Voiture'
+        'id_role',
     ];
 
     /**

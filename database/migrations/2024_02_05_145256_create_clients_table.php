@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('id_Usager', 255);
+            $table->string('id_Voiture', 255);
             $table->timestamps();
         });
     }
