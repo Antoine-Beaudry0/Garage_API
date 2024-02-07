@@ -5,18 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PageGarage extends Model
+class Garagiste extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'heuresOuverture', 
-        'heuresFermetures', 
+        'prenom'
         'nom',
-        'adresse',
-        'telephone',
-        'image',
-        'nbEmplacement'
-        'id_garagiste'
+        'email',
+        'password'
     ];
-
 }

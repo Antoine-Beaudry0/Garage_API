@@ -14,9 +14,7 @@ class RendezVous extends Model
         'dateHeureFin',
         'commentaire',
         'notificationEnvoyé',
-        'id_Client',
-        'id_Garagiste',
-        'id_Service',
+        'id_voiture',
         'id_Statut',
     ];
 }

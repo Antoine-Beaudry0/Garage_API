@@ -9,13 +9,18 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('pageGarages', function (Blueprint $table) {
             $table->id();
-            $table->string('heuresOuverture', 255);
-            $table->string('heuresFermetures', 255);
-            $table->string('id_usager', 255);
+            $table->string('heuresOuverture');
+            $table->string('heuresFermetures');
+            $table->string('nom');
+            $table->string('adresse');
+            $table->string('telephone');
+            $table->string('image')->nullable();
+            $table->string('id_garagiste');
+            $table->integer('nbEmplacement');
             $table->timestamps();
         });
     }

@@ -9,11 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->json('data', 2000);
+            $table->text('data');
+            $table->string('id_garage');
             $table->timestamps();
         });
     }

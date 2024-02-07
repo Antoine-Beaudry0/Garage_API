@@ -10,12 +10,10 @@ class Voiture extends Model
     use HasFactory;
 
     protected $fillable = [
-        'marque',
+        'marque'
         'modele',
         'annee',
         'code_SN',
-        'id_Client',
+        'id_client',
     ];
-
-    // Define relationships
 }

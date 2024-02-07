@@ -11,5 +11,6 @@ class Service extends Model
 
     protected $fillable = [
         'data',
+        'id_garage'
     ];
 }

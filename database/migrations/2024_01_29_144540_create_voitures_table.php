@@ -9,15 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('voitures', function (Blueprint $table) {
             $table->id();
-            $table->string('marque', 255);
-            $table->string('modele', 255);
-            $table->string('annee', 255);
-            $table->string('code_SN', 255);
-            $table->string('id_Client', 255);
+            $table->string('marque');
+            $table->string('modele');
+            $table->year('annee');
+            $table->string('id_client');
+            $table->string('code_SN')->unique();
             $table->timestamps();
         });
     }

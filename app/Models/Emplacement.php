@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Emplacement extends Model
 {
     use HasFactory;
-    protected $fillable = ['id_page'];
+    protected $fillable = ['id_garage'];
 }

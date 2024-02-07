@@ -9,11 +9,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->json('data', 2000);
+            $table->json('data');
+            $table->string('id_client');
             $table->timestamps();
         });
     }

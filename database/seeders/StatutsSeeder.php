@@ -11,14 +11,15 @@ class StatutsSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run()
     {
-        DB::table('statuts')->insert([
-            ['nom' => 'Actif', 'created_at' => now(), 'updated_at' => now()],
-            ['nom' => 'Inactif', 'created_at' => now(), 'updated_at' => now()],
-            ['nom' => 'En attente', 'created_at' => now(), 'updated_at' => now()],
-            ['nom' => 'Supprimé', 'created_at' => now(), 'updated_at' => now()],
-            // Ajoutez d'autres statuts selon vos besoins
-        ]);
+        $statuts = [
+            ['nom' => 'Confirmé'],
+            ['nom' => 'Non confirmé'],
+            ['nom' => 'En attente'],
+            ['nom' => 'En cours'],
+            ['nom' => 'Terminé'],
+        ];
+        DB::table('statuts')->insert($statuts);
     }
 }

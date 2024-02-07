@@ -11,16 +11,16 @@ class VoituresSeeder extends Seeder
     public function run()
     {
         $voitures = [
-            ['marque' => 'Toyota', 'modele' => 'Corolla', 'annee' => '2015', 'code_SN' => 'SN001', 'id_Client' => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['marque' => 'Honda', 'modele' => 'Civic', 'annee' => '2016', 'code_SN' => 'SN002', 'id_Client' => '2', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['marque' => 'Ford', 'modele' => 'Focus', 'annee' => '2017', 'code_SN' => 'SN003', 'id_Client' => '3', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['marque' => 'Chevrolet', 'modele' => 'Cruze', 'annee' => '2018', 'code_SN' => 'SN004', 'id_Client' => '4', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['marque' => 'Hyundai', 'modele' => 'Elantra', 'annee' => '2019', 'code_SN' => 'SN005', 'id_Client' => '5', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['marque' => 'Nissan', 'modele' => 'Sentra', 'annee' => '2020', 'code_SN' => 'SN006', 'id_Client' => '6', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['marque' => 'Volkswagen', 'modele' => 'Jetta', 'annee' => '2021', 'code_SN' => 'SN007', 'id_Client' => '7', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['marque' => 'Subaru', 'modele' => 'Impreza', 'annee' => '2022', 'code_SN' => 'SN008', 'id_Client' => '8', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['marque' => 'Mazda', 'modele' => '3', 'annee' => '2023', 'code_SN' => 'SN009', 'id_Client' => '9', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-            ['marque' => 'BMW', 'modele' => '320i', 'annee' => '2024', 'code_SN' => 'SN010', 'id_Client' => '10', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+            ['marque' => 'Toyota', 'modele' => 'Corolla', 'annee' => 2020, 'code_SN' => 'SN001', 'id_client' => 1],
+            ['marque' => 'Honda', 'modele' => 'Civic', 'annee' => 2019, 'code_SN' => 'SN002', 'id_client' => 2],
+            ['marque' => 'Ford', 'modele' => 'Fiesta', 'annee' => 2018, 'code_SN' => 'SN003', 'id_client' => 3],
+            ['marque' => 'Peugeot', 'modele' => '208', 'annee' => 2020, 'code_SN' => 'SN004', 'id_client' => 4],
+            ['marque' => 'Renault', 'modele' => 'Clio', 'annee' => 2019, 'code_SN' => 'SN005', 'id_client' => 5],
+            ['marque' => 'Volkswagen', 'modele' => 'Golf', 'annee' => 2018, 'code_SN' => 'SN006', 'id_client' => 6],
+            ['marque' => 'BMW', 'modele' => 'Series 3', 'annee' => 2020, 'code_SN' => 'SN007', 'id_client' => 7],
+            ['marque' => 'Audi', 'modele' => 'A4', 'annee' => 2019, 'code_SN' => 'SN008', 'id_client' => 8],
+            ['marque' => 'Mercedes-Benz', 'modele' => 'Class C', 'annee' => 2018, 'code_SN' => 'SN009', 'id_client' => 9],
+            ['marque' => 'Tesla', 'modele' => 'Model 3', 'annee' => 2020, 'code_SN' => 'SN010', 'id_client' => 10],
         ];
 
         DB::table('voitures')->insert($voitures);
