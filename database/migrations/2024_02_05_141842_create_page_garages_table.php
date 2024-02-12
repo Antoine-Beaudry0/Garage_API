@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pageGarages', function (Blueprint $table) {
+        Schema::create('page_garages', function (Blueprint $table) {
             $table->id();
             $table->string('heuresOuverture');
             $table->string('heuresFermetures');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pageGarages');
+        Schema::dropIfExists('page_garages');
     }
 };
