@@ -3,6 +3,17 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\NotificationsController;
+use App\Http\Controllers\RendezVousController;
+use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\UsersController;
+use App\Http\Controllers\VoituresController;
+use App\Http\Controllers\RolesController;
+use App\Http\Controllers\PageGaragesController;
+use App\Http\Controllers\EmplacementsController;
+use App\Http\Controllers\ServiceRendezVousController;
+use App\Http\Controllers\StatutsController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
