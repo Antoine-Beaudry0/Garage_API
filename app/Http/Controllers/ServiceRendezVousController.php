@@ -10,49 +10,37 @@ class ServiceRendezVousController extends Controller
     public function index()
     {
         $serviceRendezVous = ServiceRendezVous::all();
-        return view('serviceRendezVous.index', compact('serviceRendezVous'));
-    }
-
-    public function create()
-    {
-        return view('serviceRendezVous.create');
+        return response()->json($serviceRendezVous);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'service_name' => 'required|string|max:255',
-            // Add other fields as necessary
         ]);
 
-        ServiceRendezVous::create($validated);
-        return redirect()->route('serviceRendezVous.index');
+        $serviceRendezVous = ServiceRendezVous::create($validated);
+        return response()->json($serviceRendezVous, 201);
     }
 
     public function show(ServiceRendezVous $serviceRendezVous)
     {
-        return view('serviceRendezVous.show', compact('serviceRendezVous'));
-    }
-
-    public function edit(ServiceRendezVous $serviceRendezVous)
-    {
-        return view('serviceRendezVous.edit', compact('serviceRendezVous'));
+        return response()->json($serviceRendezVous);
     }
 
     public function update(Request $request, ServiceRendezVous $serviceRendezVous)
     {
         $validated = $request->validate([
             'service_name' => 'required|string|max:255',
-            // Add other fields as necessary
         ]);
 
         $serviceRendezVous->update($validated);
-        return redirect()->route('serviceRendezVous.index');
+        return response()->json($serviceRendezVous);
     }
 
     public function destroy(ServiceRendezVous $serviceRendezVous)
     {
         $serviceRendezVous->delete();
-        return redirect()->route('serviceRendezVous.index');
+        return response()->json(null, 204);
     }
 }

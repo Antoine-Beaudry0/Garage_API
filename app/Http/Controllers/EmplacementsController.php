@@ -10,49 +10,37 @@ class EmplacementsController extends Controller
     public function index()
     {
         $emplacements = Emplacement::all();
-        return view('emplacements.index', compact('emplacements'));
-    }
-
-    public function create()
-    {
-        return view('emplacements.create');
+        return response()->json($emplacements);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'location' => 'required|string|max:255',
-            // Add other fields as necessary
         ]);
 
-        Emplacement::create($validated);
-        return redirect()->route('emplacements.index');
+        $emplacement = Emplacement::create($validated);
+        return response()->json($emplacement, 201);
     }
 
     public function show(Emplacement $emplacement)
     {
-        return view('emplacements.show', compact('emplacement'));
-    }
-
-    public function edit(Emplacement $emplacement)
-    {
-        return view('emplacements.edit', compact('emplacement'));
+        return response()->json($emplacement);
     }
 
     public function update(Request $request, Emplacement $emplacement)
     {
         $validated = $request->validate([
             'location' => 'required|string|max:255',
-            // Add other fields as necessary
         ]);
 
         $emplacement->update($validated);
-        return redirect()->route('emplacements.index');
+        return response()->json($emplacement);
     }
 
     public function destroy(Emplacement $emplacement)
     {
         $emplacement->delete();
-        return redirect()->route('emplacements.index');
+        return response()->json(null, 204);
     }
 }

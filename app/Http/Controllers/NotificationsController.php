@@ -3,61 +3,48 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Notification; // Assurez-vous que le modèle Notification correspond à votre table
+use App\Models\Notification;
 
 class NotificationsController extends Controller
 {
     public function index()
     {
         $notifications = Notification::all();
-        return view('notifications.index', compact('notifications'));
-    }
-
-    public function create()
-    {
-        return view('notifications.create');
+        return response()->json($notifications);
     }
 
     public function store(Request $request)
     {
-        // Validation des données
         $validatedData = $request->validate([
             'data' => 'required|json',
         ]);
 
-        // Créez une nouvelle notification
-        Notification::create($validatedData);
+        $notification = Notification::create($validatedData);
 
-        return redirect()->route('notifications.index')->with('success', 'Notification créée avec succès');
+        return response()->json($notification, 201);
     }
 
     public function show(Notification $notification)
     {
-        return view('notifications.show', compact('notification'));
-    }
-
-    public function edit(Notification $notification)
-    {
-        return view('notifications.edit', compact('notification'));
+        return response()->json($notification);
     }
 
     public function update(Request $request, Notification $notification)
     {
-        // Validation des données
         $validatedData = $request->validate([
             'data' => 'required|json',
         ]);
 
         $notification->update($validatedData);
 
-        return redirect()->route('notifications.index')->with('success', 'Notification mise à jour avec succès');
+        return response()->json($notification);
     }
 
+    // Supprimer une notification
     public function destroy(Notification $notification)
     {
         $notification->delete();
 
-        return redirect()->route('notifications.index')->with('success', 'Notification supprimée avec succès');
+        return response()->json(null, 204);
     }
 }
-

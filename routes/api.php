@@ -73,6 +73,7 @@ Route::prefix('voitures')->group(function () {
     Route::put('/{id}', [VoituresController::class, 'update']);
     Route::delete('/{id}', [VoituresController::class, 'destroy']);
 });
+
 Route::prefix('roles')->group(function () {
     Route::get('/', [RolesController::class, 'index']);
     Route::post('/', [RolesController::class, 'store']);

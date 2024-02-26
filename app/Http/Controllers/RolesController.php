@@ -10,12 +10,7 @@ class RolesController extends Controller
     public function index()
     {
         $roles = Role::all();
-        return view('roles.index', compact('roles'));
-    }
-
-    public function create()
-    {
-        return view('roles.create');
+        return response()->json($roles);
     }
 
     public function store(Request $request)
@@ -24,18 +19,13 @@ class RolesController extends Controller
             'nom' => 'required|max:255',
         ]);
         
-        Role::create($validatedData);
-        return redirect()->route('roles.index');
+        $role = Role::create($validatedData);
+        return response()->json($role, 201);
     }
 
     public function show(Role $role)
     {
-        return view('roles.show', compact('role'));
-    }
-
-    public function edit(Role $role)
-    {
-        return view('roles.edit', compact('role'));
+        return response()->json($role);
     }
 
     public function update(Request $request, Role $role)
@@ -45,12 +35,12 @@ class RolesController extends Controller
         ]);
         
         $role->update($validatedData);
-        return redirect()->route('roles.index');
+        return response()->json($role);
     }
 
     public function destroy(Role $role)
     {
         $role->delete();
-        return redirect()->route('roles.index');
+        return response()->json(null, 204);
     }
 }

@@ -4,56 +4,50 @@ namespace App\Http\Controllers;
 
 use App\Models\Statut;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class StatutsController extends Controller
 {
     public function index()
     {
         $statuts = Statut::all();
-        return view('statuts.index', compact('statuts'));
-    }
-
-    public function create()
-    {
-        return view('statuts.create');
+        return response()->json($statuts);
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'status_name' => 'required|string|max:255',
-            // Add other fields as necessary
         ]);
 
-        Statut::create($validated);
-        return redirect()->route('statuts.index');
+        $statut = Statut::create($validated);
+        return response()->json([
+            'message' => 'Statut créé avec succès',
+            'statut' => $statut
+        ], Response::HTTP_CREATED);
     }
 
     public function show(Statut $statut)
     {
-        return view('statuts.show', compact('statut'));
-    }
-
-    public function edit(Statut $statut)
-    {
-        return view('statuts.edit', compact('statut'));
+        return response()->json($statut);
     }
 
     public function update(Request $request, Statut $statut)
     {
         $validated = $request->validate([
             'status_name' => 'required|string|max:255',
-            // Add other fields as necessary
         ]);
 
         $statut->update($validated);
-        return redirect()->route('statuts.index');
+        return response()->json([
+            'message' => 'Statut mis à jour avec succès',
+            'statut' => $statut
+        ]);
     }
 
     public function destroy(Statut $statut)
     {
         $statut->delete();
-        return redirect()->route('statuts.index');
+        return response()->json(['message' => 'Statut supprimé avec succès']);
     }
 }
-
