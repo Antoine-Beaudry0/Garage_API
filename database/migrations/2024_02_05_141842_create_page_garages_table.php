@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('page_garages', function (Blueprint $table) {
             $table->id();
-            $table->string('heuresOuverture');
-            $table->string('heuresFermetures');
+            $table->json('horaires');
             $table->string('nom');
             $table->string('adresse');
             $table->string('telephone');

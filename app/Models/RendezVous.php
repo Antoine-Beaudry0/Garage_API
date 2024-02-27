@@ -9,6 +9,8 @@ class RendezVous extends Model
 {
     use HasFactory;
 
+    protected $table = 'rendezVous';
+
     protected $fillable = [
         'dateHeureDebut',
         'dateHeureFin',

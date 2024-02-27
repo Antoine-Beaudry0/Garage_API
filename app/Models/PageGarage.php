@@ -15,7 +15,7 @@ class PageGarage extends Model
         'adresse',
         'telephone',
         'image',
-        'nbEmplacement'
+        'nbEmplacement',
         'id_garagiste'
     ];
 
