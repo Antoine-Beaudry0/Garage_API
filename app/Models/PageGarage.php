@@ -9,8 +9,7 @@ class PageGarage extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'heuresOuverture', 
-        'heuresFermetures', 
+        'horaires',
         'nom',
         'adresse',
         'telephone',

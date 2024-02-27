@@ -15,8 +15,9 @@ class RendezVous extends Model
         'dateHeureDebut',
         'dateHeureFin',
         'commentaire',
-        'notificationEnvoyé',
-        'id_voiture',
+        'notificationEnvoye',
+        'services',
+        'id_Voiture',
         'id_Statut',
     ];
 }

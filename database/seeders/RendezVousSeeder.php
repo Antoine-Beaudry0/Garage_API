@@ -9,104 +9,375 @@ class RendezVousSeeder extends Seeder
     {
         DB::table('rendezVous')->insert([
             [
-                'dateHeureDebut' => '2024-01-10 09:00:00',
-                'dateHeureFin' => '2024-01-10 11:00:00',
+                'dateHeureDebut' => '2024-01-10T15:00:00.000Z',
+                'dateHeureFin' => '2024-01-10T15:20:00.000Z',
                 'commentaire' => 'Contrôle technique',
-                'notificationEnvoyé' => true,
-                'id_Client' => '1',
-                'id_Garagiste' => '1',
-                'id_Service' => '1',
+                'notificationEnvoye' => true,
+                'services' => json_encode([
+                    [
+                        "prix" => "50",
+                        "type" => "prestation",
+                        "temps" => "45",
+                        "titre" => "Changements pneus",
+                        "chosen" => false,
+                        "position" => 1,
+                        "id_prestation" => 109
+                    ],
+                    [
+                        "prix" => "150",
+                        "type" => "prestation",
+                        "temps" => "60",
+                        "titre" => "Amortisseurs",
+                        "chosen" => false,
+                        "position" => 2,
+                        "id_prestation" => 106
+                    ],
+                    [
+                        "prix" => "80",
+                        "type" => "prestation",
+                        "temps" => "120",
+                        "titre" => "Verification globale",
+                        "chosen" => false,
+                        "position" => 3,
+                        "id_prestation" => 104
+                    ]
+                ]),
+                'id_Voiture' => '1',
                 'id_Statut' => '1',
             ],
             [
-                'dateHeureDebut' => '2024-02-15 10:00:00',
-                'dateHeureFin' => '2024-02-15 12:00:00',
+                'dateHeureDebut' => '2024-02-15T15:00:00.000Z',
+                'dateHeureFin' => '2024-02-15T15:20:00.000Z',
                 'commentaire' => 'Révision moteur',
-                'notificationEnvoyé' => false,
-                'id_Client' => '2',
-                'id_Garagiste' => '2',
-                'id_Service' => '2',
+                'notificationEnvoye' => false,
+                'services' => json_encode([
+                    [
+                        "prix" => "50",
+                        "type" => "prestation",
+                        "temps" => "45",
+                        "titre" => "Changements pneus",
+                        "chosen" => false,
+                        "position" => 1,
+                        "id_prestation" => 109
+                    ],
+                    [
+                        "prix" => "150",
+                        "type" => "prestation",
+                        "temps" => "60",
+                        "titre" => "Amortisseurs",
+                        "chosen" => false,
+                        "position" => 2,
+                        "id_prestation" => 106
+                    ],
+                    [
+                        "prix" => "80",
+                        "type" => "prestation",
+                        "temps" => "120",
+                        "titre" => "Verification globale",
+                        "chosen" => false,
+                        "position" => 3,
+                        "id_prestation" => 104
+                    ]
+                ]),
+                'id_Voiture' => '2',
                 'id_Statut' => '2',
             ],
             [
-                'dateHeureDebut' => '2024-03-20 14:00:00',
-                'dateHeureFin' => '2024-03-20 16:00:00',
+                'dateHeureDebut' => '2024-03-20T15:00:00.000Z',
+                'dateHeureFin' => '2024-03-20T15:20:00.000Z',
                 'commentaire' => 'Changement de pneus',
-                'notificationEnvoyé' => true,
-                'id_Client' => '3',
-                'id_Garagiste' => '1',
-                'id_Service' => '3',
+                'notificationEnvoye' => true,
+                'services' => json_encode([
+                    [
+                        "prix" => "50",
+                        "type" => "prestation",
+                        "temps" => "45",
+                        "titre" => "Changements pneus",
+                        "chosen" => false,
+                        "position" => 1,
+                        "id_prestation" => 109
+                    ],
+                    [
+                        "prix" => "150",
+                        "type" => "prestation",
+                        "temps" => "60",
+                        "titre" => "Amortisseurs",
+                        "chosen" => false,
+                        "position" => 2,
+                        "id_prestation" => 106
+                    ],
+                    [
+                        "prix" => "80",
+                        "type" => "prestation",
+                        "temps" => "120",
+                        "titre" => "Verification globale",
+                        "chosen" => false,
+                        "position" => 3,
+                        "id_prestation" => 104
+                    ]
+                ]),
+                'id_Voiture' => '3',
                 'id_Statut' => '3',
             ],
             [
-                'dateHeureDebut' => '2024-04-25 09:00:00',
-                'dateHeureFin' => '2024-04-25 11:00:00',
+                'dateHeureDebut' => '2024-04-25T15:00:00.000Z',
+                'dateHeureFin' => '2024-04-25T15:20:00.000Z',
                 'commentaire' => 'Peinture carrosserie',
-                'notificationEnvoyé' => false,
-                'id_Client' => '4',
-                'id_Garagiste' => '2',
-                'id_Service' => '4',
+                'notificationEnvoye' => false,
+                'services' => json_encode([
+                    [
+                        "prix" => "50",
+                        "type" => "prestation",
+                        "temps" => "45",
+                        "titre" => "Changements pneus",
+                        "chosen" => false,
+                        "position" => 1,
+                        "id_prestation" => 109
+                    ],
+                    [
+                        "prix" => "150",
+                        "type" => "prestation",
+                        "temps" => "60",
+                        "titre" => "Amortisseurs",
+                        "chosen" => false,
+                        "position" => 2,
+                        "id_prestation" => 106
+                    ],
+                    [
+                        "prix" => "80",
+                        "type" => "prestation",
+                        "temps" => "120",
+                        "titre" => "Verification globale",
+                        "chosen" => false,
+                        "position" => 3,
+                        "id_prestation" => 104
+                    ]
+                ]),
+                'id_Voiture' => '4',
                 'id_Statut' => '4',
             ],
             [
-                'dateHeureDebut' => '2024-05-30 13:00:00',
-                'dateHeureFin' => '2024-05-30 15:00:00',
+                'dateHeureDebut' => '2024-05-30T15:00:00.000Z',
+                'dateHeureFin' => '2024-05-30T15:20:00.000Z',
                 'commentaire' => 'Vérification freins',
-                'notificationEnvoyé' => true,
-                'id_Client' => '5',
-                'id_Garagiste' => '1',
-                'id_Service' => '5',
+                'notificationEnvoye' => true,
+                'services' => json_encode([
+                    [
+                        "prix" => "50",
+                        "type" => "prestation",
+                        "temps" => "45",
+                        "titre" => "Changements pneus",
+                        "chosen" => false,
+                        "position" => 1,
+                        "id_prestation" => 109
+                    ],
+                    [
+                        "prix" => "150",
+                        "type" => "prestation",
+                        "temps" => "60",
+                        "titre" => "Amortisseurs",
+                        "chosen" => false,
+                        "position" => 2,
+                        "id_prestation" => 106
+                    ],
+                    [
+                        "prix" => "80",
+                        "type" => "prestation",
+                        "temps" => "120",
+                        "titre" => "Verification globale",
+                        "chosen" => false,
+                        "position" => 3,
+                        "id_prestation" => 104
+                    ]
+                ]),
+                'id_Voiture' => '5',
                 'id_Statut' => '1',
             ],
             [
-                'dateHeureDebut' => '2024-06-04 08:00:00',
-                'dateHeureFin' => '2024-06-04 10:00:00',
+                'dateHeureDebut' => '2024-06-04T15:00:00.000Z',
+                'dateHeureFin' => '2024-06-04T15:20:00.000Z',
                 'commentaire' => 'Réglage des phares',
-                'notificationEnvoyé' => false,
-                'id_Client' => '6',
-                'id_Garagiste' => '2',
-                'id_Service' => '6',
+                'notificationEnvoye' => false,
+                'services' => json_encode([
+                    [
+                        "prix" => "50",
+                        "type" => "prestation",
+                        "temps" => "45",
+                        "titre" => "Changements pneus",
+                        "chosen" => false,
+                        "position" => 1,
+                        "id_prestation" => 109
+                    ],
+                    [
+                        "prix" => "150",
+                        "type" => "prestation",
+                        "temps" => "60",
+                        "titre" => "Amortisseurs",
+                        "chosen" => false,
+                        "position" => 2,
+                        "id_prestation" => 106
+                    ],
+                    [
+                        "prix" => "80",
+                        "type" => "prestation",
+                        "temps" => "120",
+                        "titre" => "Verification globale",
+                        "chosen" => false,
+                        "position" => 3,
+                        "id_prestation" => 104
+                    ]
+                ]),
+                'id_Voiture' => '6',
                 'id_Statut' => '2',
             ],
             [
-                'dateHeureDebut' => '2024-07-09 11:00:00',
-                'dateHeureFin' => '2024-07-09 13:00:00',
+                'dateHeureDebut' => '2024-07-09T15:00:00.000Z',
+                'dateHeureFin' => '2024-07-09T15:20:00.000Z',
                 'commentaire' => 'Installation système GPS',
-                'notificationEnvoyé' => true,
-                'id_Client' => '7',
-                'id_Garagiste' => '1',
-                'id_Service' => '7',
+                'notificationEnvoye' => true,
+                'services' => json_encode([
+                    [
+                        "prix" => "50",
+                        "type" => "prestation",
+                        "temps" => "45",
+                        "titre" => "Changements pneus",
+                        "chosen" => false,
+                        "position" => 1,
+                        "id_prestation" => 109
+                    ],
+                    [
+                        "prix" => "150",
+                        "type" => "prestation",
+                        "temps" => "60",
+                        "titre" => "Amortisseurs",
+                        "chosen" => false,
+                        "position" => 2,
+                        "id_prestation" => 106
+                    ],
+                    [
+                        "prix" => "80",
+                        "type" => "prestation",
+                        "temps" => "120",
+                        "titre" => "Verification globale",
+                        "chosen" => false,
+                        "position" => 3,
+                        "id_prestation" => 104
+                    ]
+                ]),
+                'id_Voiture' => '7',
                 'id_Statut' => '3',
             ],
             [
-                'dateHeureDebut' => '2024-08-14 15:00:00',
-                'dateHeureFin' => '2024-08-14 17:00:00',
+                'dateHeureDebut' => '2024-08-14T15:00:00.000Z',
+                'dateHeureFin' => '2024-08-14T15:20:00.000Z',
                 'commentaire' => 'Entretien climatisation',
-                'notificationEnvoyé' => false,
-                'id_Client' => '8',
-                'id_Garagiste' => '2',
-                'id_Service' => '8',
+                'notificationEnvoye' => false,
+                'services' => json_encode([
+                    [
+                        "prix" => "50",
+                        "type" => "prestation",
+                        "temps" => "45",
+                        "titre" => "Changements pneus",
+                        "chosen" => false,
+                        "position" => 1,
+                        "id_prestation" => 109
+                    ],
+                    [
+                        "prix" => "150",
+                        "type" => "prestation",
+                        "temps" => "60",
+                        "titre" => "Amortisseurs",
+                        "chosen" => false,
+                        "position" => 2,
+                        "id_prestation" => 106
+                    ],
+                    [
+                        "prix" => "80",
+                        "type" => "prestation",
+                        "temps" => "120",
+                        "titre" => "Verification globale",
+                        "chosen" => false,
+                        "position" => 3,
+                        "id_prestation" => 104
+                    ]
+                ]),
+                'id_Voiture' => '8',
                 'id_Statut' => '4',
             ],
             [
-                'dateHeureDebut' => '2024-09-19 09:30:00',
-                'dateHeureFin' => '2024-09-19 11:30:00',
+                'dateHeureDebut' => '2024-09-19T15:00:00.000Z',
+                'dateHeureFin' => '2024-09-19T15:20:00.000Z',
                 'commentaire' => 'Réparation système audio',
-                'notificationEnvoyé' => true,
-                'id_Client' => '9',
-                'id_Garagiste' => '1',
-                'id_Service' => '9',
+                'notificationEnvoye' => true,
+                'services' => json_encode([
+                    [
+                        "prix" => "50",
+                        "type" => "prestation",
+                        "temps" => "45",
+                        "titre" => "Changements pneus",
+                        "chosen" => false,
+                        "position" => 1,
+                        "id_prestation" => 109
+                    ],
+                    [
+                        "prix" => "150",
+                        "type" => "prestation",
+                        "temps" => "60",
+                        "titre" => "Amortisseurs",
+                        "chosen" => false,
+                        "position" => 2,
+                        "id_prestation" => 106
+                    ],
+                    [
+                        "prix" => "80",
+                        "type" => "prestation",
+                        "temps" => "120",
+                        "titre" => "Verification globale",
+                        "chosen" => false,
+                        "position" => 3,
+                        "id_prestation" => 104
+                    ]
+                ]),
+                'id_Voiture' => '9',
                 'id_Statut' => '1',
             ],
             [
-                'dateHeureDebut' => '2024-10-24 14:00:00',
-                'dateHeureFin' => '2024-10-24 16:00:00',
+                'dateHeureDebut' => '2024-10-24T15:00:00.000Z',
+                'dateHeureFin' => '2024-10-24T15:20:00.000Z',
                 'commentaire' => 'Remplacement batterie',
-                'notificationEnvoyé' => false,
-                'id_Client' => '10',
-                'id_Garagiste' => '2',
-                'id_Service' => '10',
+                'notificationEnvoye' => false,
+                'services' => json_encode([
+                    [
+                        "prix" => "50",
+                        "type" => "prestation",
+                        "temps" => "45",
+                        "titre" => "Changements pneus",
+                        "chosen" => false,
+                        "position" => 1,
+                        "id_prestation" => 109
+                    ],
+                    [
+                        "prix" => "150",
+                        "type" => "prestation",
+                        "temps" => "60",
+                        "titre" => "Amortisseurs",
+                        "chosen" => false,
+                        "position" => 2,
+                        "id_prestation" => 106
+                    ],
+                    [
+                        "prix" => "80",
+                        "type" => "prestation",
+                        "temps" => "120",
+                        "titre" => "Verification globale",
+                        "chosen" => false,
+                        "position" => 3,
+                        "id_prestation" => 104
+                    ]
+                ]),
+                'id_Voiture' => '10',
                 'id_Statut' => '2',
+
             ]
         ]);
     }

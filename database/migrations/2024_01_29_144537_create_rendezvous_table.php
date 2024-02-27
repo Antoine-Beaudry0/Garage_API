@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('rendezVous', function (Blueprint $table) {
             $table->id();
+            $table->json('services');
             $table->string('dateHeureDebut', 255);
             $table->string('dateHeureFin', 255);
             $table->string('commentaire', 255);
-            $table->boolean('notificationEnvoyé', 255);
-            $table->string('id_Client', 255);
-            $table->string('id_Garagiste', 255);
-            $table->string('id_Service', 255);
+            $table->boolean('notificationEnvoye', 255);
+            $table->string('id_Voiture', 255);
             $table->string('id_Statut', 255);
             $table->timestamps();
         });
