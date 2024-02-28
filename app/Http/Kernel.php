@@ -65,4 +65,13 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->call(function () {
+            DB::table('rendezvous')
+                ->where('date_heure', '<', now())
+                ->where('statut', '!=', 'Terminé')
+                ->update(['statut' => 'Terminé']);
+        })->daily();
+    }
 }

@@ -73,14 +73,6 @@ Route::prefix('voitures')->group(function () {
     Route::put('/{id}', [VoituresController::class, 'update']);
     Route::delete('/{id}', [VoituresController::class, 'destroy']);
 });
-
-Route::prefix('roles')->group(function () {
-    Route::get('/', [RolesController::class, 'index']);
-    Route::post('/', [RolesController::class, 'store']);
-    Route::get('/{role}', [RolesController::class, 'show']);
-    Route::put('/{role}', [RolesController::class, 'update']);
-    Route::delete('/{role}', [RolesController::class, 'destroy']);
-});
 Route::prefix('pageGarages')->group(function () {
     Route::get('/', [PageGaragesController::class, 'index']);
     Route::post('/', [PageGaragesController::class, 'store']);
