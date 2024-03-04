@@ -43,4 +43,20 @@ class PageGaragesController extends Controller
         $pageGarage->delete();
         return response()->json(null, 204);
     }
+    
+    // Trouve des rendez-vous par ID de prestataire avec des filtres de date et de confirmation
+    private function findByPrestaId($prestaId, $startDate, $endDate, $confirm)
+    {
+        $query = RendezVous::where('prestataire_id', $prestaId);
+
+        if ($startDate && $endDate) {
+            $query->whereBetween('date', [Carbon::parse($startDate), Carbon::parse($endDate)]);
+        }
+
+        if (!is_null($confirm)) {
+            $query->where('confirme', $confirm);
+        }
+
+        return $query->get();
+    }
 }
