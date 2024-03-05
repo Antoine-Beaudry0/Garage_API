@@ -9,22 +9,22 @@ use Illuminate\Support\Facades\Auth;
 
 class RendezVousController extends Controller
 {
-    // Récupérer tous les rendez-vous, avec la possibilité de filtres par utilisateur ou prestataire
+    
     public function index(Request $request)
     {
         $query = RendezVous::query();
-
+    
         // Filtres optionnels par date et confirmation
         if ($startDate = $request->query('startDate')) {
-            $query->where('date', '>=', Carbon::parse($startDate));
+            $query->where('dateHeureDebut', '>=', Carbon::parse($startDate));
         }
         if ($endDate = $request->query('endDate')) {
-            $query->where('date', '<=', Carbon::parse($endDate));
+            $query->where('dateHeureFin', '<=', Carbon::parse($endDate));
         }
         if ($request->has('confirm')) {
             $query->where('confirme', $request->query('confirm') === 'true');
         }
-
+    
         // Filtrage par rôle d'utilisateur (si nécessaire)
         $user = Auth::user();
         if ($user && $user->role->type === 'prestataire') {
@@ -32,9 +32,18 @@ class RendezVousController extends Controller
         } elseif ($user) {
             $query->where('user_id', $user->id);
         }
-
+    
         $rendezvous = $query->get();
-        return response()->json(['data' => $rendezvous]);
+    
+        // Transformer les données avant de les retourner, notamment décoder le champ 'services'
+        $rendezvousTransformed = $rendezvous->map(function ($item) {
+            if (isset($item->services)) {
+                $item->services = json_decode($item->services, true);
+            }
+            return $item;
+        });
+    
+        return response()->json(['data' => $rendezvousTransformed]);
     }
 
     // Créer un nouveau rendez-vous
@@ -143,5 +152,36 @@ class RendezVousController extends Controller
         }
 
         return $results;
+    }
+
+    public function getRdvEnCours(Request $request)
+    {
+        // Vous pouvez ajouter des filtres supplémentaires ici si nécessaire
+        $rendezvous = RendezVous::whereIn('id_Statut', [2])->get();
+
+        return response()->json(['data' => $rendezvous]);
+    }
+
+    public function getRdvConfirme(Request $request)
+    {
+        // Vous pouvez ajouter des filtres supplémentaires ici si nécessaire
+        $rendezvous = RendezVous::whereIn('id_Statut', [1])->get();
+
+        return response()->json(['data' => $rendezvous]);
+    }
+    
+    public function confirmerRendezVous($id)
+    {
+        // Trouver le rendez-vous par son ID
+        $rendezvous = RendezVous::findOrFail($id);
+
+        // Mettre à jour le statut du rendez-vous à "Confirmé"
+        $rendezvous->idStatut = 1; // ID 1 pour "Confirmé", selon vos seeds
+
+        // Sauvegarder les changements
+        $rendezvous->save();
+
+        // Retourner une réponse
+        return response()->json(['message' => 'Rendez-vous confirmé avec succès', 'data' => $rendezvous]);
     }
 }

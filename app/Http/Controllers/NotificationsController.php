@@ -47,4 +47,15 @@ class NotificationsController extends Controller
 
         return response()->json(null, 204);
     }
+
+    public function sendEmail(Request $request, $notificationId)
+    {
+        $notification = Notification::findOrFail($notificationId);
+        $notificationData = json_decode($notification->data, true);
+        $clientEmail = Client::findOrFail($notification->id_client)->email; // Assurez-vous que votre modèle Client a un attribut email
+
+        Mail::to($clientEmail)->send(new NotificationEmail($notificationData));
+
+        return response()->json(['message' => 'Email envoyé avec succès']);
+    }
 }

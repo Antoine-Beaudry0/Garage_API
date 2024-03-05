@@ -42,6 +42,8 @@ Route::prefix('notifications')->group(function () {
 Route::prefix('rendezvous')->group(function () {
     Route::get('/', [RendezVousController::class, 'index']);
     Route::post('/', [RendezVousController::class, 'store']);
+    Route::get('/encours', [RendezVousController::class, 'getRdvEnCours']);
+    Route::get('/confirme', [RendezVousController::class, 'getRdvConfirme']);
     Route::get('/{id}', [RendezVousController::class, 'show']);
     Route::put('/{id}', [RendezVousController::class, 'update']);
     Route::delete('/{id}', [RendezVousController::class, 'destroy']);
