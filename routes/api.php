@@ -36,6 +36,7 @@ Route::prefix('notifications')->group(function () {
     Route::get('/{id}', [NotificationsController::class, 'show']);
     Route::put('/{id}', [NotificationsController::class, 'update']);
     Route::delete('/{id}', [NotificationsController::class, 'destroy']);
+    Route::post('/notifications/send/{notification}', [NotificationsController::class, 'sendEmail']);
 });
 
 // Routes for RendezVous

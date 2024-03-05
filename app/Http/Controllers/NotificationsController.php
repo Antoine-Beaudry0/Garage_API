@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Notification;
+use App\Models\Client;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NotificationEmail;
+
 
 class NotificationsController extends Controller
 {
@@ -40,7 +44,6 @@ class NotificationsController extends Controller
         return response()->json($notification);
     }
 
-    // Supprimer une notification
     public function destroy(Notification $notification)
     {
         $notification->delete();
@@ -58,4 +61,16 @@ class NotificationsController extends Controller
 
         return response()->json(['message' => 'Email envoyé avec succès']);
     }
+
+    public function sendEmailToClient($clientId, $notificationId)
+    {
+        $client = Client::findOrFail($clientId);
+        $notification = Notification::findOrFail($notificationId);
+        $notificationData = json_decode($notification->data, true);
+
+        Mail::to('antobeaudry@gmail.com')->send(new NotificationEmail($notificationData));
+
+        return "Email envoyé au client avec succès.";
+    }
+
 }
