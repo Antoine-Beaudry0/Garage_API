@@ -29,6 +29,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+//CONNEXION
+
+Route::POST('/login',[UsersController::class,'login']);
+
 // Routes for Notifications
 Route::prefix('notifications')->group(function () {
     Route::get('/', [NotificationsController::class, 'index']);
@@ -63,7 +68,9 @@ Route::prefix('users')->group(function () {
     Route::get('/{id}', [UsersController::class, 'show']);
     Route::put('/{id}', [UsersController::class, 'update']);
     Route::delete('/{id}', [UsersController::class, 'destroy']);
+ 
 });
+
 
 // Routes for Voitures
 Route::prefix('voitures')->group(function () {
