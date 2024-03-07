@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Client;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class ClientsController extends Controller
 {
@@ -11,15 +14,8 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $clients = Client::all();
+        return response()->json(['data' => $clients]);
     }
 
     /**
@@ -27,7 +23,18 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nom' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:clients',
+            'password' => 'required|string|min:8',
+            // Ajoutez ici les validations pour d'autres champs requis
+        ]);
+
+        $validatedData['password'] = Hash::make($validatedData['password']); // Hasher le mot de passe
+
+        $client = Client::create($validatedData);
+
+        return response()->json(['message' => 'Client créé avec succès', 'data' => $client], 201);
     }
 
     /**
@@ -35,15 +42,8 @@ class ClientsController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $client = Client::findOrFail($id);
+        return response()->json(['data' => $client]);
     }
 
     /**
@@ -51,14 +51,45 @@ class ClientsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $client = Client::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'nom' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|string|email|max:255|unique:clients,email,' . $id,
+            'password' => 'sometimes|required|string|min:8',
+            // Ajoutez ici les validations pour d'autres champs que vous souhaitez mettre à jour
+        ]);
+
+        if (isset($validatedData['password'])) {
+            $validatedData['password'] = Hash::make($validatedData['password']);
+        }
+
+        $client->update($validatedData);
+
+        return response()->json(['message' => 'Client mis à jour avec succès', 'data' => $client]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $client = Client::findOrFail($id);
+        $client->delete();
+
+        return response()->json(['message' => 'Client supprimé avec succès']);
+    }
+    
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+
+        if (Auth::guard('client')->attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return response()->json(['message' => 'Connexion réussie']);
+        }
+
+        return response()->json(['message' => 'Les informations de connexion ne correspondent pas'], 401);
     }
 }

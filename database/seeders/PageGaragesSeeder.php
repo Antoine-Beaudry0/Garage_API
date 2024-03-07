@@ -18,12 +18,12 @@ class PageGaragesSeeder extends Seeder
                 'nom' => 'Garage Central',
                 'adresse' => '123 Rue Principale',
                 'telephone' => '0123456789',
-                'image' => null, // ou spécifiez un chemin d'image
-                'id_garagiste' => 1, // Assurez-vous que cet ID existe dans votre table users ou garagistes
+                'image' => null,
+                'id_garagiste' => 1,
                 'nbEmplacement' => 5,
                 'horaires' => json_encode([]),
             ],
-            // Ajoutez autant de garages que vous le souhaitez ici
         ];
+        DB::table('page_garages')->insert($garages);
     }
 }

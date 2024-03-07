@@ -41,12 +41,15 @@ Route::prefix('notifications')->group(function () {
     Route::get('/{id}', [NotificationsController::class, 'show']);
     Route::put('/{id}', [NotificationsController::class, 'update']);
     Route::delete('/{id}', [NotificationsController::class, 'destroy']);
+    Route::post('/notifications/send/{notification}', [NotificationsController::class, 'sendEmail']);
 });
 
 // Routes for RendezVous
 Route::prefix('rendezvous')->group(function () {
     Route::get('/', [RendezVousController::class, 'index']);
     Route::post('/', [RendezVousController::class, 'store']);
+    Route::get('/encours', [RendezVousController::class, 'getRdvEnCours']);
+    Route::get('/confirme', [RendezVousController::class, 'getRdvConfirme']);
     Route::get('/{id}', [RendezVousController::class, 'show']);
     Route::put('/{id}', [RendezVousController::class, 'update']);
     Route::delete('/{id}', [RendezVousController::class, 'destroy']);
