@@ -159,7 +159,17 @@ class RendezVousController extends Controller
         // Vous pouvez ajouter des filtres supplémentaires ici si nécessaire
         $rendezvous = RendezVous::whereIn('id_Statut', [2])->get();
 
-        return response()->json(['data' => $rendezvous]);
+        $rendezvousTransformed = $rendezvous->map(function ($item) {
+            if (isset($item->services)) {
+                $item->services = json_decode($item->services, true);
+            }
+            return $item;
+        });
+
+        return response()->json(['data' => $rendezvousTransformed]);
+
+                // Transformer les données avant de les retourner, notamment décoder le champ 'services'
+
     }
 
     public function getRdvConfirme(Request $request)
