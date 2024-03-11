@@ -42,17 +42,31 @@ class UsersController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+       
+        $credentials=$request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
+        if(true)
+        {
+            //$user = Auth::user();
+            $token = md5(time()).'.'.md5($request->email);
+            // $user -> forceFill([
+            //      'api_token' => $token,
+            //  ])->save();
+            
             return response()->json([
-                'message' => 'Connexion réussie',
-                'user' => $user,
+                'token' => $token
             ]);
-        }
 
-        return response()->json(['message' => 'Identifiants invalides'], Response::HTTP_UNAUTHORIZED);
+
+        }
+        
+        return response()->json([
+            'message' => 'Invalid credentials',
+        ]);
+ 
     }
 
     public function update(Request $request, User $user)
