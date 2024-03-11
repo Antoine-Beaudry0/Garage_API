@@ -78,35 +78,25 @@ class ClientsController extends Controller
     }
     
     public function login(Request $request)
-    {         
-        return response()->json([
-            'message' => 'Invalid credentials',]);
-
-
-        /*$credentials=$request->validate([
+    {
+        $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        if(Auth:: attempt($credentials))
-        {
-            $user = Auth::user();
-            $token = md5(time()).'.'.md5($request->email);
-            $user -> forceFill([
-                'api_token' => $token,
-            ])->save();
-
-            return response()->json([
-                'token' => $token,
-                'statut' => true
-            ]);
-
-
+        try {
+            // Attempt to authenticate the user
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'Invalid credentials'], 401);
+            }
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Could not create token'], 500);
         }
 
+        // If successful, return the JWT token with other relevant user data
         return response()->json([
-            'message' => 'Invalid credentials',
+            'token' => $token,
+            'user' => Auth::user() 
         ]);
-*/
     }
 }
