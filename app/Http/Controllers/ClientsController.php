@@ -78,18 +78,35 @@ class ClientsController extends Controller
     }
     
     public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
+    {         
+        return response()->json([
+            'message' => 'Invalid credentials',]);
+
+
+        /*$credentials=$request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
 
-        if (Auth::guard('client')->attempt($credentials)) {
-            $request->session()->regenerate();
+        if(Auth:: attempt($credentials))
+        {
+            $user = Auth::user();
+            $token = md5(time()).'.'.md5($request->email);
+            $user -> forceFill([
+                'api_token' => $token,
+            ])->save();
 
-            return response()->json(['message' => 'Connexion réussie']);
+            return response()->json([
+                'token' => $token,
+                'statut' => true
+            ]);
+
+
         }
 
-        return response()->json(['message' => 'Les informations de connexion ne correspondent pas'], 401);
+        return response()->json([
+            'message' => 'Invalid credentials',
+        ]);
+*/
     }
 }
