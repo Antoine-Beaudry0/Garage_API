@@ -16,4 +16,8 @@ class Voiture extends Model
         'code_SN',
         'id_client',
     ];
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
 }

@@ -20,4 +20,8 @@ class RendezVous extends Model
         'id_Voiture',
         'id_Statut',
     ];
+    public function voiture()
+    {
+        return $this->belongsTo(Voiture::class, 'id_voiture'); // Specify foreign key if needed
+    }
 }

@@ -14,7 +14,6 @@ class RendezVousController extends Controller
     {
         $query = RendezVous::query();
     
-        // Filtres optionnels par date et confirmation
         if ($startDate = $request->query('startDate')) {
             $query->where('dateHeureDebut', '>=', Carbon::parse($startDate));
         }
@@ -25,7 +24,6 @@ class RendezVousController extends Controller
             $query->where('confirme', $request->query('confirm') === 'true');
         }
     
-        // Filtrage par rôle d'utilisateur (si nécessaire)
         $user = Auth::user();
         if ($user && $user->role->type === 'prestataire') {
             $query->where('prestataire_id', $user->id);
@@ -33,18 +31,26 @@ class RendezVousController extends Controller
             $query->where('user_id', $user->id);
         }
     
-        $rendezvous = $query->get();
+        // Fetch client details via relationships
+        $rendezvous = $query->with('voiture.client')->get(); 
     
-        // Transformer les données avant de les retourner, notamment décoder le champ 'services'
+        // Transform data and include client information
         $rendezvousTransformed = $rendezvous->map(function ($item) {
             if (isset($item->services)) {
                 $item->services = json_decode($item->services, true);
             }
+    
+            // Include client name (assuming necessary relationships exist)
+            if ($item->voiture && $item->voiture->client) { 
+                $item->client_name = $item->voiture->client->prenom . ' ' . $item->voiture->client->nom;
+            }
+    
             return $item;
         });
     
         return response()->json(['data' => $rendezvousTransformed]);
     }
+    
 
     // Créer un nouveau rendez-vous
     public function store(Request $request)
