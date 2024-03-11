@@ -99,4 +99,48 @@ class ClientsController extends Controller
             'user' => Auth::user() 
         ]);
     }
+    public function signup(Request $request)
+    {
+        $validatedData = $request->validate([
+            //infos clients
+            'prenom' => 'required|string|max:255',
+            'nom' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:clients',
+            'password' => 'required|string|min:8|confirmed', // Add confirmation rule
+            'telephone' => 'required|string', 
+            'adresse' => 'required|string',
+            
+            //infos voiture
+            'marque' => 'required|string',
+            'modele' => 'required|string',
+            'annee' => 'required|integer',
+        ]);
+
+        DB::transaction(function () use ($validatedData, $request) {
+            $client = Client::create($request->only([
+                'prenom', 'nom', 'email', 'password', 'telephone', 'adresse'
+            ]));
+    
+            $client->password = Hash::make($client->password); 
+            $client->save();
+    
+            $client->voiture()->create($request->only([
+                'marque', 'modele', 'annee' 
+            ]));
+        });
+    
+        // Token Generation & Response
+        if ($token = JWTAuth::attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'message' => 'Client créé avec succès',
+                'token' => $token,
+                'user' => $client
+            ], 201);
+        }
+    
+        return response()->json([
+            'message' => 'Client créé avec succès',
+            'user' => $client
+        ], 201); 
+    }
 }

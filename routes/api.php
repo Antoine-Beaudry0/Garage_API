@@ -74,7 +74,16 @@ Route::prefix('users')->group(function () {
     Route::post('/login',[ClientsController::class, 'login']);
  
 });
-
+Route::prefix('clients')->group(function () {
+    Route::get('/', [UsersController::class, 'index']);
+    Route::post('/', [UsersController::class, 'store']);
+    Route::get('/{id}', [UsersController::class, 'show']);
+    Route::put('/{id}', [UsersController::class, 'update']);
+    Route::delete('/{id}', [UsersController::class, 'destroy']);
+    Route::post('/login',[ClientsController::class, 'login']);
+    Route::post('/signup',[ClientsController::class, 'signup']);
+ 
+});
 
 // Routes for Voitures
 Route::prefix('voitures')->group(function () {
