@@ -104,7 +104,8 @@ class ClientsController extends Controller
 
         // If successful, return the JWT token with other relevant user data
         return response()->json([
-            'token' => $token,
+          
+            'message'=>"test",
            // 'user' => Auth::user() 
            'user' => $userData
 

@@ -55,7 +55,7 @@ class UsersController extends Controller
         $user = Auth::user();
 
         // Générer le jeton d'API
-        $token = $user->createToken('Personal Access Token')->plainTextToken;
+       // $token = $user->createToken('Personal Access Token')->plainTextToken;
 
         // Retourner les informations de l'utilisateur et le jeton d'API dans la réponse JSON
         return response()->json([
@@ -66,7 +66,7 @@ class UsersController extends Controller
                 'telephone' => $user->telephone,
                 'email' => $user->email,
             ],
-            'token' => $token
+            //'token' => $token
         ]);
     }
 
