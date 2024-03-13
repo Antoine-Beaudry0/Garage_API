@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Client extends Authenticatable 
+class Client extends Authenticatable implements JWTSubject
 {
 
     use HasApiTokens, HasFactory, Notifiable;
