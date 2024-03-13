@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Client;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 
@@ -11,7 +11,7 @@ class UsersController extends Controller
 {
     public function index()
     {
-        $users = Client::all();
+        $users = User::all();
         return response()->json($users);
     }
 
@@ -23,7 +23,7 @@ class UsersController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        $user = Client::create([
+        $user = User::create([
             'nom' => $validatedData['nom'],
             'email' => $validatedData['email'],
             'password' => bcrypt($validatedData['password']),
@@ -35,7 +35,7 @@ class UsersController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    public function show(Client $user)
+    public function show(User $user)
     {
         return response()->json($user);
     }
@@ -43,39 +43,33 @@ class UsersController extends Controller
     public function login(Request $request)
     {
        
-      // Valider les données du formulaire de connexion
-      $credentials = $request->validate([
-        'email' => ['required', 'email'],
-        'password' => ['required'],
-    ]);
-
-    // Tenter de connecter l'utilisateur
-    if (Auth::attempt($credentials)) {
-        // Authentification réussie, récupérer l'utilisateur
-        $user = Auth::user();
-
-        // Générer le jeton d'API
-        $token = $user->createToken('Personal Access Token')->plainTextToken;
-
-        // Retourner les informations de l'utilisateur et le jeton d'API dans la réponse JSON
-        return response()->json([
-            'user' => [
-                'id' => $user->id,
-                'prenom' => $user->prenom,
-                'nom' => $user->nom,
-                'telephone' => $user->telephone,
-                'email' => $user->email,
-            ],
-            'token' => $token
+        $credentials=$request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
-    }
 
-    // Authentification échouée, retourner une réponse d'erreur avec un message personnalisé
-    return response()->json(['error' => 'Unauthorized', 'message' => 'Email or password incorrect'], 401);
+        if(true)
+        {
+            //$user = Auth::user();
+            $token = md5(time()).'.'.md5($request->email);
+            // $user -> forceFill([
+            //      'api_token' => $token,
+            //  ])->save();
+            
+            return response()->json([
+                'token' => $token
+            ]);
+
+
+        }
+        
+        return response()->json([
+            'message' => 'Invalid credentials',
+        ]);
  
     }
 
-    public function update(Request $request, Client $user)
+    public function update(Request $request, User $user)
     {
         $validatedData = $request->validate([
             'nom' => 'required',
@@ -90,7 +84,7 @@ class UsersController extends Controller
         ]);
     }
 
-    public function destroy(Client $user)
+    public function destroy(User $user)
     {
         $user->delete();
 

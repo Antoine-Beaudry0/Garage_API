@@ -93,21 +93,10 @@ class ClientsController extends Controller
             return response()->json(['error' => 'Could not create token'], 500);
         }
 
-        $user = Auth::user();
-
-        $userData = [
-            'id' => $user->id,
-            'name' => $user->name,
-            'prenom' => $user->prenom,
-            'email' => $user->email
-        ];
-
         // If successful, return the JWT token with other relevant user data
         return response()->json([
             'token' => $token,
-           // 'user' => Auth::user() 
-           'user' => $userData
-
+            'user' => Auth::user() 
         ]);
     }
     public function signup(Request $request)
