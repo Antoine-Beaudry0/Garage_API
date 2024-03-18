@@ -47,10 +47,10 @@ class UsersController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
+return $credentials;
         if(true)
         {
-            //$user = Auth::user();
+            $user = Auth::user();
             $token = md5(time()).'.'.md5($request->email);
             // $user -> forceFill([
             //      'api_token' => $token,

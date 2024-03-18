@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Garagiste;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\DB;
+
 
 class GaragistesController extends Controller
 {
@@ -57,5 +62,34 @@ class GaragistesController extends Controller
     {
         $garagiste->delete();
         return response()->json(null, 204);
+    }
+    
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);      
+        try {
+            if (!$token = Auth::guard('garagiste')->attempt($credentials)) {
+                return response()->json(['error' => 'Invalid credentials'], 401);
+            }
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Could not create token'], 500);
+        }
+        $user = Auth::guard('garagiste')->user();
+
+        $userData = [
+            'id' => $user->id,
+            'name' => $user->nom,
+            'prenom' => $user->prenom,
+            'email' => $user->email
+        ];
+
+        // If successful, return the JWT token with other relevant user data
+        return response()->json([
+            'token' => $token,
+            'user' => $userData
+        ]);
     }
 }
