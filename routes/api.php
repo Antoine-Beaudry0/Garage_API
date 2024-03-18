@@ -72,7 +72,6 @@ Route::prefix('users')->group(function () {
     Route::put('/{id}', [UsersController::class, 'update']);
     Route::delete('/{id}', [UsersController::class, 'destroy']);
     Route::post('/login',[ClientsController::class, 'login']);
- 
 });
 
 
