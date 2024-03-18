@@ -23,8 +23,6 @@ class RendezVousController extends Controller
         if ($request->has('confirm')) {
             $query->where('confirme', $request->query('confirm') === 'true');
         }
-    
-        $user = Auth::user();
         if ($user && $user->role->type === 'prestataire') {
             $query->where('prestataire_id', $user->id);
         } elseif ($user) {
@@ -78,15 +76,9 @@ class RendezVousController extends Controller
     // Mettre à jour un rendez-vous
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'date' => 'sometimes|required|date',
-            'datefin' => 'sometimes|required|date',
-            'confirme' => 'sometimes|required|boolean',
-            // Ajoutez d'autres champs requis pour la mise à jour ici
-        ]);
 
         $rendezvous = RendezVous::findOrFail($id);
-        $rendezvous->update($validatedData);
+        $rendezvous->update($request);
         return response()->json(['data' => $rendezvous]);
     }
 

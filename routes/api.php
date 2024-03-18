@@ -13,6 +13,10 @@ use App\Http\Controllers\PageGaragesController;
 use App\Http\Controllers\EmplacementsController;
 use App\Http\Controllers\ServiceRendezVousController;
 use App\Http\Controllers\StatutsController;
+use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\GaragistesController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,8 +35,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 //CONNEXION
-
-Route::POST('/login',[UsersController::class,'login']);
+Route::POST('/loginuser',[ClientsController::class,'login']);
+Route::POST('/logingarage',[GaragistesController::class,'login']);
 
 // Routes for Notifications
 Route::prefix('notifications')->group(function () {
@@ -45,14 +49,16 @@ Route::prefix('notifications')->group(function () {
 });
 
 // Routes for RendezVous
-Route::prefix('rendezvous')->group(function () {
-    Route::get('/', [RendezVousController::class, 'index']);
-    Route::post('/', [RendezVousController::class, 'store']);
-    Route::get('/encours', [RendezVousController::class, 'getRdvEnCours']);
-    Route::get('/confirme', [RendezVousController::class, 'getRdvConfirme']);
-    Route::get('/{id}', [RendezVousController::class, 'show']);
-    Route::put('/{id}', [RendezVousController::class, 'update']);
-    Route::delete('/{id}', [RendezVousController::class, 'destroy']);
+Route::middleware('jwt.auth')->group(function () {
+    Route::prefix('rendezvous')->group(function () {
+        Route::get('/', [RendezVousController::class, 'index']);
+        Route::post('/', [RendezVousController::class, 'store']);
+        Route::get('/encours', [RendezVousController::class, 'getRdvEnCours']);
+        Route::get('/confirme', [RendezVousController::class, 'getRdvConfirme']);
+        Route::get('/{id}', [RendezVousController::class, 'show']);
+        Route::put('/{id}', [RendezVousController::class, 'update']);
+        Route::delete('/{id}', [RendezVousController::class, 'destroy']);
+    });
 });
 
 // Routes for Services
@@ -71,13 +77,32 @@ Route::prefix('users')->group(function () {
     Route::get('/{id}', [UsersController::class, 'show']);
     Route::put('/{id}', [UsersController::class, 'update']);
     Route::delete('/{id}', [UsersController::class, 'destroy']);
-    Route::post('/login',[ClientsController::class, 'login']);
+ 
 });
-
+Route::prefix('clients')->group(function () {
+    Route::get('/', [UsersController::class, 'index']);
+    Route::post('/', [UsersController::class, 'store']);
+    Route::get('/{id}', [UsersController::class, 'show']);
+    Route::put('/{id}', [UsersController::class, 'update']);
+    Route::delete('/{id}', [UsersController::class, 'destroy']);
+    Route::post('/login',[ClientsController::class, 'login']);
+    Route::post('/signup',[ClientsController::class, 'signup']);
+ 
+});
+Route::prefix('garagistes')->group(function () {
+    Route::get('/', [GaragistesController::class, 'index']);
+    Route::post('/', [GaragistesController::class, 'store']);
+    Route::get('/{id}', [GaragistesController::class, 'show']);
+    Route::put('/{id}', [GaragistesController::class, 'update']);
+    Route::delete('/{id}', [GaragistesController::class, 'destroy']);
+    Route::post('/login',[GaragistesController::class, 'login']);
+    Route::post('/signup',[GaragistesController::class, 'signup']);
+ 
+});
 
 // Routes for Voitures
 Route::prefix('voitures')->group(function () {
-    Route::get('/', [VoituresController::class, 'index']);
+    Route::resource('/', VoituresController::class)->except(['create', 'edit']);
     Route::post('/', [VoituresController::class, 'store']);
     Route::get('/{id}', [VoituresController::class, 'show']);
     Route::put('/{id}', [VoituresController::class, 'update']);

@@ -40,8 +40,15 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'client' => [
+            'driver' => 'jwt',
+            'provider' => 'clients',
+        ],
+        'garagiste' => [
+            'driver' => 'jwt',
+            'provider' => 'garagistes',
+        ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -60,17 +67,15 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'clients' => [ // Notez que j'ai changé 'client' en 'clients' pour le distinguer
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Client::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'garagistes' => [ // Utilisez une clé différente pour les garagistes
+            'driver' => 'eloquent',
+            'model' => App\Models\Garagiste::class,
+        ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Resetting Passwords

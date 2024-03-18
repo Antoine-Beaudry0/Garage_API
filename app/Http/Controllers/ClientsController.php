@@ -6,10 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\DB;
+
 
 class ClientsController extends Controller
 {
-    /**
+
+    /**√
      * Display a listing of the resource.
      */
     public function index()
@@ -83,20 +88,74 @@ class ClientsController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
+    
         try {
-            // Attempt to authenticate the user
-            if (!$token = JWTAuth::attempt($credentials)) {
+            // Spécifiez le guard pour le type d'utilisateur que vous essayez d'authentifier
+            if (!$token = Auth::guard('client')->attempt($credentials)) {
                 return response()->json(['error' => 'Invalid credentials'], 401);
             }
         } catch (JWTException $e) {
             return response()->json(['error' => 'Could not create token'], 500);
         }
-
+    
+        $user = Auth::guard('client')->user();
+    
+        $userData = [
+            'id' => $user->id,
+            'name' => $user->nom,
+            'prenom' => $user->prenom,
+            'email' => $user->email
+        ];
+    
         // If successful, return the JWT token with other relevant user data
         return response()->json([
             'token' => $token,
-            'user' => Auth::user() 
+            'user' => $userData
         ]);
+    }
+
+    public function signup(Request $request)
+    {
+        $validatedData = $request->validate([
+            //infos clients
+            'prenom' => 'required|string|max:255',
+            'nom' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:clients',
+            'password' => 'required|string|min:8|confirmed', // Add confirmation rule
+            'telephone' => 'required|string', 
+            'adresse' => 'required|string',
+            
+            //infos voiture
+            'marque' => 'required|string',
+            'modele' => 'required|string',
+            'annee' => 'required|integer',
+        ]);
+
+        DB::transaction(function () use ($validatedData, $request) {
+            $client = Client::create($request->only([
+                'prenom', 'nom', 'email', 'password', 'telephone', 'adresse'
+            ]));
+    
+            $client->password = Hash::make($client->password); 
+            $client->save();
+    
+            $client->voiture()->create($request->only([
+                'marque', 'modele', 'annee' 
+            ]));
+        });
+    
+        // Token Generation & Response
+        if ($token = JWTAuth::attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'message' => 'Client créé avec succès',
+                'token' => $token,
+                'user' => $client
+            ], 201);
+        }
+    
+        return response()->json([
+            'message' => 'Client créé avec succès',
+            'user' => $client
+        ], 201); 
     }
 }

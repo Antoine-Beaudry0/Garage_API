@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Client extends Authenticatable implements JWTSubject
 {
@@ -24,11 +26,6 @@ class Client extends Authenticatable implements JWTSubject
         'telephone' => 'string'
     ];
 
-    // Example - Relationship with Orders
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
-    }
     public function getJWTIdentifier()
     {
         return $this->getKey(); // Returns the primary key ('id' by default)

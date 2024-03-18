@@ -59,4 +59,5 @@ class PageGaragesController extends Controller
 
         return $query->get();
     }
+
 }

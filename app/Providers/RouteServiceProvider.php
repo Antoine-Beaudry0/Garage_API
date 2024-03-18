@@ -25,8 +25,25 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+            $userId = null;
+            
+            // Essayez d'obtenir l'utilisateur avec le guard 'client'
+            $client = auth('client')->user();
+            if ($client) {
+                $userId = $client->id;
+            }
+        
+            // Sinon, essayez avec le guard 'garagiste'
+            if (!$userId) {
+                $garagiste = auth('garagiste')->user();
+                if ($garagiste) {
+                    $userId = $garagiste->id;
+                }
+            }
+        
+            return Limit::perMinute(60)->by($userId ?: $request->ip());
         });
+        
 
         $this->routes(function () {
             Route::middleware('api')
