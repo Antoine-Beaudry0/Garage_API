@@ -37,6 +37,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //CONNEXION
 Route::POST('/loginuser',[ClientsController::class,'login']);
 Route::POST('/logingarage',[GaragistesController::class,'login']);
+Route::post('/logout', [GaragistesController::class, 'logout']);
 
 // Routes for Notifications
 Route::prefix('notifications')->group(function () {
@@ -49,8 +50,7 @@ Route::prefix('notifications')->group(function () {
 });
 
 // Routes for RendezVous
-Route::middleware('jwt.auth')->group(function () {
-    Route::prefix('rendezvous')->group(function () {
+Route::prefix('rendezvous')->group(function () {
         Route::get('/', [RendezVousController::class, 'index']);
         Route::post('/', [RendezVousController::class, 'store']);
         Route::get('/encours', [RendezVousController::class, 'getRdvEnCours']);
@@ -59,7 +59,6 @@ Route::middleware('jwt.auth')->group(function () {
         Route::put('/{id}', [RendezVousController::class, 'update']);
         Route::delete('/{id}', [RendezVousController::class, 'destroy']);
     });
-});
 
 // Routes for Services
 Route::prefix('services')->group(function () {
@@ -70,21 +69,12 @@ Route::prefix('services')->group(function () {
     Route::delete('/{id}', [ServicesController::class, 'destroy']);
 });
 
-// Routes for Users
-Route::prefix('users')->group(function () {
-    Route::get('/', [UsersController::class, 'index']);
-    Route::post('/', [UsersController::class, 'store']);
-    Route::get('/{id}', [UsersController::class, 'show']);
-    Route::put('/{id}', [UsersController::class, 'update']);
-    Route::delete('/{id}', [UsersController::class, 'destroy']);
- 
-});
 Route::prefix('clients')->group(function () {
-    Route::get('/', [UsersController::class, 'index']);
-    Route::post('/', [UsersController::class, 'store']);
-    Route::get('/{id}', [UsersController::class, 'show']);
-    Route::put('/{id}', [UsersController::class, 'update']);
-    Route::delete('/{id}', [UsersController::class, 'destroy']);
+    Route::get('/', [ClientsController::class, 'index']);
+    Route::post('/', [ClientsController::class, 'store']);
+    Route::get('/{id}', [ClientsController::class, 'show']);
+    Route::put('/{id}', [ClientsController::class, 'update']);
+    Route::delete('/{id}', [ClientsController::class, 'destroy']);
     Route::post('/login',[ClientsController::class, 'login']);
     Route::post('/signup',[ClientsController::class, 'signup']);
  

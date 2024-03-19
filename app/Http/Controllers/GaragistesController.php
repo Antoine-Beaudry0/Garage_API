@@ -81,7 +81,7 @@ class GaragistesController extends Controller
 
         $userData = [
             'id' => $user->id,
-            'name' => $user->nom,
+            'nom' => $user->nom,
             'prenom' => $user->prenom,
             'email' => $user->email
         ];
@@ -92,4 +92,18 @@ class GaragistesController extends Controller
             'user' => $userData
         ]);
     }
+    public function logout(Request $request)
+{
+    try {
+        // Invalidate le token JWT, le rendant inutilisable
+        JWTAuth::invalidate($request->token);
+
+        // Retourner une réponse pour indiquer que la déconnexion a réussi
+        return response()->json(['message' => 'User successfully signed out']);
+    } catch (JWTException $e) {
+        // En cas d'erreur lors de l'invalide du token, retourner une réponse d'erreur
+        return response()->json(['error' => 'Failed to logout, please try again'], 500);
+    }
+}
+
 }

@@ -10,45 +10,44 @@ use Illuminate\Support\Facades\Auth;
 class RendezVousController extends Controller
 {
     
-    public function index(Request $request)
-    {
-        $query = RendezVous::query();
-    
-        if ($startDate = $request->query('startDate')) {
-            $query->where('dateHeureDebut', '>=', Carbon::parse($startDate));
-        }
-        if ($endDate = $request->query('endDate')) {
-            $query->where('dateHeureFin', '<=', Carbon::parse($endDate));
-        }
-        if ($request->has('confirm')) {
-            $query->where('confirme', $request->query('confirm') === 'true');
-        }
-        if ($user && $user->role->type === 'prestataire') {
-            $query->where('prestataire_id', $user->id);
-        } elseif ($user) {
-            $query->where('user_id', $user->id);
-        }
-    
-        // Fetch client details via relationships
-        $rendezvous = $query->with('voiture.client')->get(); 
-    
-        // Transform data and include client information
-        $rendezvousTransformed = $rendezvous->map(function ($item) {
-            if (isset($item->services)) {
-                $item->services = json_decode($item->services, true);
-            }
-    
-            // Include client name (assuming necessary relationships exist)
-            if ($item->voiture && $item->voiture->client) { 
-                $item->client_name = $item->voiture->client->prenom . ' ' . $item->voiture->client->nom;
-            }
-    
-            return $item;
-        });
-    
-        return response()->json(['data' => $rendezvousTransformed]);
+public function index(Request $request)
+{
+    $query = RendezVous::query();
+
+    if ($startDate = $request->query('startDate')) {
+        $query->where('dateHeureDebut', '>=', Carbon::parse($startDate));
     }
+    if ($endDate = $request->query('endDate')) {
+        $query->where('dateHeureFin', '<=', Carbon::parse($endDate));
+    }
+    if ($request->has('confirm')) {
+        $query->where('confirme', $request->query('confirm') === 'true');
+    }
+
+    // Essayer d'extraire l'utilisateur authentifié avec le guard 'client', sinon utiliser 'garagiste'
+    $user = Auth::guard('client')->user() ?? Auth::guard('garagiste')->user();
     
+    // Appliquer la logique de filtrage en fonction de l'utilisateur authentifié
+    if ($user instanceof \App\Models\Garagiste) {
+        $query->where('prestataire_id', $user->id);
+    } elseif ($user instanceof \App\Models\Client) {
+        $query->where('client_id', $user->id); // Assurez-vous que c'est le bon nom de colonne dans votre table des rendez-vous
+    }
+
+    $rendezvous = $query->with('voiture.client')->get();
+
+    $rendezvousTransformed = $rendezvous->map(function ($item) {
+        if (isset($item->services)) {
+            $item->services = json_decode($item->services, true);
+        }
+        if ($item->voiture && $item->voiture->client) { 
+            $item->client_name = $item->voiture->client->prenom . ' ' . $item->voiture->client->nom;
+        }
+        return $item;
+    });
+
+    return response()->json(['data' => $rendezvousTransformed]);
+}
 
     // Créer un nouveau rendez-vous
     public function store(Request $request)
