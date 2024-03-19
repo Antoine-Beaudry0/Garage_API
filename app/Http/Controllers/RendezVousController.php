@@ -184,6 +184,20 @@ public function index(Request $request)
 
         return response()->json(['data' => $rendezvousTransformed]);
     }
+    public function getRdvNonConfirme(Request $request)
+    {
+        // Vous pouvez ajouter des filtres supplémentaires ici si nécessaire
+        $rendezvous = RendezVous::whereIn('id_Statut', [2])->get();
+
+        $rendezvousTransformed = $rendezvous->map(function ($item) {
+            if (isset($item->services)) {
+                $item->services = json_decode($item->services, true);
+            }
+            return $item;
+        });
+
+        return response()->json(['data' => $rendezvousTransformed]);
+    }
     
     public function confirmerRendezVous($id)
     {

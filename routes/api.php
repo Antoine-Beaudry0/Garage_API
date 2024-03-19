@@ -55,6 +55,7 @@ Route::prefix('rendezvous')->group(function () {
         Route::post('/', [RendezVousController::class, 'store']);
         Route::get('/encours', [RendezVousController::class, 'getRdvEnCours']);
         Route::get('/confirme', [RendezVousController::class, 'getRdvConfirme']);
+        Route::get('/nonconfirme', [RendezVousController::class, 'getRdvNonConfirme']);
         Route::get('/{id}', [RendezVousController::class, 'show']);
         Route::put('/{id}', [RendezVousController::class, 'update']);
         Route::delete('/{id}', [RendezVousController::class, 'destroy']);
