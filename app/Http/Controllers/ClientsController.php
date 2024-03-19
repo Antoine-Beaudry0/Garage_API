@@ -90,7 +90,6 @@ class ClientsController extends Controller
         ]);
     
         try {
-            // Spécifiez le guard pour le type d'utilisateur que vous essayez d'authentifier
             if (!$token = Auth::guard('client')->attempt($credentials)) {
                 return response()->json(['error' => 'Invalid credentials'], 401);
             }

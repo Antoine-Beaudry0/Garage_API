@@ -23,8 +23,14 @@ class PageGaragesController extends Controller
         return response()->json($pageGarage, 201);
     }
 
-    public function show(PageGarage $pageGarage)
+    public function show($id)
     {
+        $pageGarage = PageGarage::findOrFail($id);
+            if (isset($pageGarage->horaires)) {
+                $pageGarage->horaires = json_decode($pageGarage->horaires, true);
+            }
+
+
         return response()->json($pageGarage);
     }
 
