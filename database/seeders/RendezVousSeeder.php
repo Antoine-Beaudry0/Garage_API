@@ -44,6 +44,7 @@ class RendezVousSeeder extends Seeder
                 ]),
                 'id_Voiture' => '1',
                 'id_Statut' => '1',
+                'id_PageGarage' => '1',
             ],
             [
                 'dateHeureDebut' => '2024-02-15T15:00:00.000Z',
@@ -81,6 +82,7 @@ class RendezVousSeeder extends Seeder
                 ]),
                 'id_Voiture' => '2',
                 'id_Statut' => '2',
+                'id_PageGarage' => '2',
             ],
             [
                 'dateHeureDebut' => '2024-03-20T15:00:00.000Z',
@@ -118,6 +120,7 @@ class RendezVousSeeder extends Seeder
                 ]),
                 'id_Voiture' => '3',
                 'id_Statut' => '3',
+                'id_PageGarage' => '3',
             ],
             [
                 'dateHeureDebut' => '2024-04-25T15:00:00.000Z',
@@ -155,6 +158,7 @@ class RendezVousSeeder extends Seeder
                 ]),
                 'id_Voiture' => '4',
                 'id_Statut' => '4',
+                'id_PageGarage' => '4',
             ],
             [
                 'dateHeureDebut' => '2024-05-30T15:00:00.000Z',
@@ -192,6 +196,7 @@ class RendezVousSeeder extends Seeder
                 ]),
                 'id_Voiture' => '5',
                 'id_Statut' => '1',
+                'id_PageGarage' => '5',
             ],
             [
                 'dateHeureDebut' => '2024-06-04T15:00:00.000Z',
@@ -229,6 +234,7 @@ class RendezVousSeeder extends Seeder
                 ]),
                 'id_Voiture' => '6',
                 'id_Statut' => '2',
+                'id_PageGarage' => '6',
             ],
             [
                 'dateHeureDebut' => '2024-07-09T15:00:00.000Z',
@@ -266,6 +272,7 @@ class RendezVousSeeder extends Seeder
                 ]),
                 'id_Voiture' => '7',
                 'id_Statut' => '3',
+                'id_PageGarage' => '1',
             ],
             [
                 'dateHeureDebut' => '2024-08-14T15:00:00.000Z',
@@ -303,6 +310,7 @@ class RendezVousSeeder extends Seeder
                 ]),
                 'id_Voiture' => '8',
                 'id_Statut' => '4',
+                'id_PageGarage' => '2',
             ],
             [
                 'dateHeureDebut' => '2024-09-19T15:00:00.000Z',
@@ -340,6 +348,7 @@ class RendezVousSeeder extends Seeder
                 ]),
                 'id_Voiture' => '9',
                 'id_Statut' => '1',
+                'id_PageGarage' => '3',
             ],
             [
                 'dateHeureDebut' => '2024-10-24T15:00:00.000Z',
@@ -377,6 +386,7 @@ class RendezVousSeeder extends Seeder
                 ]),
                 'id_Voiture' => '10',
                 'id_Statut' => '2',
+                'id_PageGarage' => '4',
 
             ]
         ]);

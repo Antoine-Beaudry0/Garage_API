@@ -59,7 +59,7 @@ Route::prefix('rendezvous')->group(function () {
         Route::get('/{id}', [RendezVousController::class, 'show']);
         Route::put('/{id}', [RendezVousController::class, 'update']);
         Route::delete('/{id}', [RendezVousController::class, 'destroy']);
-    });
+});
 
 // Routes for Services
 Route::prefix('services')->group(function () {
@@ -76,8 +76,6 @@ Route::prefix('clients')->group(function () {
     Route::get('/{id}', [ClientsController::class, 'show']);
     Route::put('/{id}', [ClientsController::class, 'update']);
     Route::delete('/{id}', [ClientsController::class, 'destroy']);
-    Route::post('/login',[ClientsController::class, 'login']);
-    Route::post('/signup',[ClientsController::class, 'signup']);
  
 });
 Route::prefix('garagistes')->group(function () {
@@ -90,7 +88,6 @@ Route::prefix('garagistes')->group(function () {
     Route::post('/signup',[GaragistesController::class, 'signup']);
  
 });
-
 // Routes for Voitures
 Route::prefix('voitures')->group(function () {
     Route::resource('/', VoituresController::class)->except(['create', 'edit']);

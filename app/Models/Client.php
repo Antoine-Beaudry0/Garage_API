@@ -11,30 +11,36 @@ class Client extends Authenticatable implements JWTSubject
 {
     use HasFactory;
     protected $fillable = [
-    'prenom',
-    'nom',
-    'email',
-    'password',
-    'telephone',
-    'adresse'
+        'prenom',
+        'nom',
+        'email',
+        'password',
+        'telephone',
+        'adresse',
     ];
+
+    public function voitures()
+    {
+        return $this->hasMany(Voiture::class, 'id_client', 'id');
+    }
+
     protected $hidden = [
         'password',
     ];
 
     protected $casts = [
-        'telephone' => 'string'
+        'telephone' => 'string',
     ];
 
     public function getJWTIdentifier()
     {
         return $this->getKey(); // Returns the primary key ('id' by default)
     }
+
     public function getJWTCustomClaims()
     {
         return [
-            'role' => 'client' // Example of adding a role claim
+            'role' => 'client', // Example of adding a role claim
         ];
     }
-    
 }

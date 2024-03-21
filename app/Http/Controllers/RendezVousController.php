@@ -10,44 +10,42 @@ use Illuminate\Support\Facades\Auth;
 class RendezVousController extends Controller
 {
     
-public function index(Request $request)
-{
-    $query = RendezVous::query();
-
-    if ($startDate = $request->query('startDate')) {
-        $query->where('dateHeureDebut', '>=', Carbon::parse($startDate));
-    }
-    if ($endDate = $request->query('endDate')) {
-        $query->where('dateHeureFin', '<=', Carbon::parse($endDate));
-    }
-    if ($request->has('confirm')) {
-        $query->where('confirme', $request->query('confirm') === 'true');
-    }
-
-    // Essayer d'extraire l'utilisateur authentifié avec le guard 'client', sinon utiliser 'garagiste'
-    $user = Auth::guard('client')->user() ?? Auth::guard('garagiste')->user();
+    public function index(Request $request)
+    {
+        $query = RendezVous::query();
+        // Vos filtres existants...
     
-    // Appliquer la logique de filtrage en fonction de l'utilisateur authentifié
-    if ($user instanceof \App\Models\Garagiste) {
-        $query->where('prestataire_id', $user->id);
-    } elseif ($user instanceof \App\Models\Client) {
-        $query->where('client_id', $user->id); // Assurez-vous que c'est le bon nom de colonne dans votre table des rendez-vous
+        // Charger les rendez-vous avec les informations des voitures (et des clients via les voitures)
+        $rendezvous = $query->with('voiture.client')->get();
+    
+        // Transformer les données pour inclure les informations de la voiture et du client
+        $rendezvousTransformed = $rendezvous->map(function ($item) {
+            // Décodez le champ 'services' si nécessaire
+            $item->services = isset($item->services) ? json_decode($item->services, true) : null;
+            
+            // Ajouter des informations de la voiture et du client directement à l'objet de rendez-vous
+            if ($item->voiture) { 
+                $item->voiture_details = [
+                    'marque' => $item->voiture->marque,
+                    'modele' => $item->voiture->modele,
+                    // Ajoutez d'autres champs nécessaires de la voiture
+                ];
+                // Si le client est chargé via la voiture, incluez également ces informations
+                if ($item->voiture->client) {
+                    $item->client_details = [
+                        'nom' => $item->voiture->client->nom,
+                        'prenom' => $item->voiture->client->prenom,
+                        // Ajoutez d'autres champs nécessaires du client
+                    ];
+                }
+            }
+    
+            return $item;
+        });
+    
+        return response()->json(['data' => $rendezvousTransformed]);
     }
-
-    $rendezvous = $query->with('voiture.client')->get();
-
-    $rendezvousTransformed = $rendezvous->map(function ($item) {
-        if (isset($item->services)) {
-            $item->services = json_decode($item->services, true);
-        }
-        if ($item->voiture && $item->voiture->client) { 
-            $item->client_name = $item->voiture->client->prenom . ' ' . $item->voiture->client->nom;
-        }
-        return $item;
-    });
-
-    return response()->json(['data' => $rendezvousTransformed]);
-}
+    
 
     // Créer un nouveau rendez-vous
     public function store(Request $request)
@@ -65,12 +63,15 @@ public function index(Request $request)
         return response()->json(['data' => $rendezvous], 201);
     }
 
-    // Afficher un rendez-vous spécifique
     public function show($id)
     {
-        $rendezvous = RendezVous::findOrFail($id);
+        // Chargez le rendez-vous avec les détails de la voiture associée
+        $rendezvous = RendezVous::with('voiture')->findOrFail($id);
+    
+        // Vous pouvez ici personnaliser la réponse si nécessaire
         return response()->json(['data' => $rendezvous]);
     }
+    
 
     // Mettre à jour un rendez-vous
     public function update(Request $request, $id)
@@ -213,4 +214,5 @@ public function index(Request $request)
         // Retourner une réponse
         return response()->json(['message' => 'Rendez-vous confirmé avec succès', 'data' => $rendezvous]);
     }
+    
 }

@@ -88,7 +88,7 @@ class ClientsController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-    
+
         try {
             if (!$token = Auth::guard('client')->attempt($credentials)) {
                 return response()->json(['error' => 'Invalid credentials'], 401);
@@ -96,22 +96,35 @@ class ClientsController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'Could not create token'], 500);
         }
-    
+
         $user = Auth::guard('client')->user();
-    
+        // Pré-charge les voitures liées au client
+        $user->load('voitures');
+
         $userData = [
             'id' => $user->id,
             'name' => $user->nom,
             'prenom' => $user->prenom,
-            'email' => $user->email
+            'email' => $user->email,
+            'voitures' => $user->voitures->map(function ($voiture) {
+                return [
+                    'id' => $voiture->id,
+                    'marque' => $voiture->marque,
+                    'modele' => $voiture->modele,
+                    'annee' => $voiture->annee,
+                    'code_SN' => $voiture->code_SN,
+                ];
+            }),
         ];
-    
+
         // If successful, return the JWT token with other relevant user data
         return response()->json([
             'token' => $token,
             'user' => $userData
         ]);
     }
+
+    
 
     public function signup(Request $request)
     {

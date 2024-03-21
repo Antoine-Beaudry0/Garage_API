@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('telephone');
             $table->string('image')->nullable();
             $table->string('id_garagiste');
-            $table->integer('nbEmplacement');
             $table->timestamps();
         });
     }

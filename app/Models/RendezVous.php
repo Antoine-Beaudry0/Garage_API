@@ -18,10 +18,11 @@ class RendezVous extends Model
         'notificationEnvoye',
         'services',
         'id_Voiture',
+        'id_PageGarage',
         'id_Statut',
     ];
     public function voiture()
     {
-        return $this->belongsTo(Voiture::class, 'id_voiture'); // Specify foreign key if needed
+        return $this->belongsTo(Voiture::class, 'id_Voiture', 'id');
     }
 }

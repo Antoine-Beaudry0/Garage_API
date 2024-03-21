@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('commentaire', 255);
             $table->boolean('notificationEnvoye', 255);
             $table->string('id_Voiture', 255);
+            $table->string('id_PageGarage', 255);
             $table->string('id_Statut', 255);
             $table->timestamps();
         });
