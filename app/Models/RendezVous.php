@@ -21,6 +21,10 @@ class RendezVous extends Model
         'id_PageGarage',
         'id_Statut',
     ];
+    protected $attributes = [
+        'services' => '[]', 
+    ];
+    
     public function voiture()
     {
         return $this->belongsTo(Voiture::class, 'id_Voiture', 'id');

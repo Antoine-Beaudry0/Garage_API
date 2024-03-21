@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('nom');
             $table->string('adresse');
             $table->string('telephone');
+            $table->integer('nbEmplacement');
+            $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->string('id_garagiste');
             $table->timestamps();

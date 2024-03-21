@@ -51,24 +51,24 @@ class RendezVousController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'date' => 'required|date',
-            'datefin' => 'required|date',
-            'confirme' => 'required|boolean',
-            'user_id' => 'required|exists:users,id',
-            'prestataire_id' => 'required|exists:users,id',
-            // Ajoutez d'autres champs requis ici
+            'services' => 'required', // Assure-toi que les règles de validation correspondent à tes besoins
+            'dateHeureDebut' => 'required|date',
+            'dateHeureFin' => 'required|date',
+            'commentaire' => 'nullable|string',
+            'notificationEnvoye' => 'required|boolean',
+            'id_Voiture' => 'required|integer', // Ajoute des règles de validation supplémentaires comme nécessaire
+            'id_PageGarage' => 'required|integer',
+            'id_Statut' => 'required|integer',
         ]);
-
+    
         $rendezvous = RendezVous::create($validatedData);
         return response()->json(['data' => $rendezvous], 201);
     }
+    
 
     public function show($id)
     {
-        // Chargez le rendez-vous avec les détails de la voiture associée
-        $rendezvous = RendezVous::with('voiture')->findOrFail($id);
-    
-        // Vous pouvez ici personnaliser la réponse si nécessaire
+        $rendezvous = RendezVous::with('voiture.client')->findOrFail($id);
         return response()->json(['data' => $rendezvous]);
     }
     
@@ -156,7 +156,7 @@ class RendezVousController extends Controller
     public function getRdvEnCours(Request $request)
     {
         // Vous pouvez ajouter des filtres supplémentaires ici si nécessaire
-        $rendezvous = RendezVous::whereIn('id_Statut', [2])->get();
+        $rendezvous = RendezVous::whereIn('id_Statut', [3])->get();
 
         $rendezvousTransformed = $rendezvous->map(function ($item) {
             if (isset($item->services)) {

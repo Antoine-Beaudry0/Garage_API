@@ -13,6 +13,7 @@ class PageGarage extends Model
         'nom',
         'adresse',
         'telephone',
+        'description',
         'image',
         'nbEmplacement',
         'id_garagiste'

@@ -19,6 +19,7 @@ class PageGaragesSeeder extends Seeder
                 'adresse' => '123 Rue Principale',
                 'telephone' => '0123456789',
                 'image' => null,
+                'description' => 'Le Garage Central est reconnu pour son engagement envers l\'excellence et la qualité de service dans le domaine de la réparation automobile. Établi au cœur de la ville, notre garage offre une gamme complète de services, allant de l\'entretien courant à des réparations plus complexes.',
                 'id_garagiste' => 1,
                 'nbEmplacement' => 5,
                 'horaires' => json_encode([

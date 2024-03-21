@@ -16,7 +16,6 @@ class StatutsSeeder extends Seeder
         $statuts = [
             ['nom' => 'Confirmé'],
             ['nom' => 'Non confirmé'],
-            ['nom' => 'En attente'],
             ['nom' => 'En cours'],
             ['nom' => 'Terminé'],
         ];
