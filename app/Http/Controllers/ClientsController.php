@@ -29,18 +29,25 @@ class ClientsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'prenom' => 'required|string|max:255',
             'nom' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:clients',
             'password' => 'required|string|min:8',
-            // Ajoutez ici les validations pour d'autres champs requis
+            'telephone' => 'required|string',
+            'adresse' => 'required|string',
         ]);
-
-        $validatedData['password'] = Hash::make($validatedData['password']); // Hasher le mot de passe
-
+    
+        $validatedData['password'] = Hash::make($validatedData['password']);
+    
+        // Ajout pour déboguer les données validées
+        \Log::debug('validatedData', $validatedData);
+    
         $client = Client::create($validatedData);
-
+    
         return response()->json(['message' => 'Client créé avec succès', 'data' => $client], 201);
     }
+    
+
 
     /**
      * Display the specified resource.
