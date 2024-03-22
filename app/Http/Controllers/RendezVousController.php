@@ -76,9 +76,8 @@ class RendezVousController extends Controller
     // Mettre à jour un rendez-vous
     public function update(Request $request, $id)
     {
-
         $rendezvous = RendezVous::findOrFail($id);
-        $rendezvous->update($request);
+        $rendezvous->update($request->all()); // Utilise $request->all() ou mieux, valide et nettoie tes données d'abord
         return response()->json(['data' => $rendezvous]);
     }
 
@@ -185,6 +184,7 @@ class RendezVousController extends Controller
 
         return response()->json(['data' => $rendezvousTransformed]);
     }
+
     public function getRdvNonConfirme(Request $request)
     {
         // Vous pouvez ajouter des filtres supplémentaires ici si nécessaire
@@ -206,7 +206,7 @@ class RendezVousController extends Controller
         $rendezvous = RendezVous::findOrFail($id);
 
         // Mettre à jour le statut du rendez-vous à "Confirmé"
-        $rendezvous->idStatut = 1; // ID 1 pour "Confirmé", selon vos seeds
+        $rendezvous->id_Statut = 1; // ID 1 pour "Confirmé", selon vos seeds
 
         // Sauvegarder les changements
         $rendezvous->save();
