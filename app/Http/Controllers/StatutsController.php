@@ -17,8 +17,8 @@ class StatutsController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'status_name' => 'required|string|max:255',
-        ]);
+            'nom' => 'required|string|max:255', // Modification de status_name à nom
+        ]);        
 
         $statut = Statut::create($validated);
         return response()->json([
@@ -35,15 +35,16 @@ class StatutsController extends Controller
     public function update(Request $request, Statut $statut)
     {
         $validated = $request->validate([
-            'status_name' => 'required|string|max:255',
+            'nom' => 'required|string|max:255', // Utilisation de nom ici
         ]);
-
+    
         $statut->update($validated);
         return response()->json([
             'message' => 'Statut mis à jour avec succès',
             'statut' => $statut
         ]);
     }
+    
 
     public function destroy(Statut $statut)
     {
