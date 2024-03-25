@@ -21,7 +21,7 @@ class VoituresController extends Controller
             'modele' => 'required',
             'annee' => 'required',
             'code_SN' => 'required',
-            'id_Client' => 'required',
+            'id_client' => 'required',
         ]);
 
         $voiture = Voiture::create($validatedData);
@@ -44,7 +44,7 @@ class VoituresController extends Controller
             'modele' => 'required',
             'annee' => 'required',
             'code_SN' => 'required',
-            'id_Client' => 'required',
+            'id_client' => 'required',
         ]);
 
         $voiture->update($validatedData);

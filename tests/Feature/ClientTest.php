@@ -10,6 +10,14 @@ use App\Models\Client;
 
 class ClientTest extends TestCase
 {
+    /** @test */
+    public function client_factory_works()
+    {
+        $client = \App\Models\Client::factory()->create();
+        
+        $this->assertModelExists($client);
+    }
+
     public function testIndexReturnsAllClients()
     {
         Client::factory()->count(3)->create();
