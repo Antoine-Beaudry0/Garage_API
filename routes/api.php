@@ -61,6 +61,7 @@ Route::prefix('rendezvous')->group(function () {
         Route::put('/{id}', [RendezVousController::class, 'update']);
         Route::delete('/{id}', [RendezVousController::class, 'destroy']);
         Route::patch('/confirmer/{id}', [RendezVousController::class, 'confirmerRendezVous']);
+        Route::patch('/terminer/{id}', [RendezVousController::class, 'terminerRendezVous']);
 });
 
 // Routes for Services

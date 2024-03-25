@@ -22,7 +22,7 @@ class RendezVousController extends Controller
         $rendezvousTransformed = $rendezvous->map(function ($item) {
             // Décodez le champ 'services' si nécessaire
             $item->services = isset($item->services) ? json_decode($item->services, true) : null;
-            
+            $item->tel = $item->voiture->client->telephone;
             // Ajouter des informations de la voiture et du client directement à l'objet de rendez-vous
             if ($item->voiture) { 
                 $item->voiture_details = [
@@ -154,49 +154,104 @@ class RendezVousController extends Controller
 
     public function getRdvEnCours(Request $request)
     {
-        // Vous pouvez ajouter des filtres supplémentaires ici si nécessaire
-        $rendezvous = RendezVous::whereIn('id_Statut', [3])->get();
-
+        $rendezvous = RendezVous::whereIn('id_Statut', [3])
+        ->with('voiture.client')
+        ->get();
+    
+        // Transformer les données pour inclure les informations de la voiture et du client
         $rendezvousTransformed = $rendezvous->map(function ($item) {
-            if (isset($item->services)) {
-                $item->services = json_decode($item->services, true);
+            // Décodez le champ 'services' si nécessaire
+            $item->services = isset($item->services) ? json_decode($item->services, true) : null;
+            $item->tel = $item->voiture->client->telephone;
+            // Ajouter des informations de la voiture et du client directement à l'objet de rendez-vous
+            if ($item->voiture) { 
+                $item->voiture_details = [
+                    'marque' => $item->voiture->marque,
+                    'modele' => $item->voiture->modele,
+                    // Ajoutez d'autres champs nécessaires de la voiture
+                ];
+                // Si le client est chargé via la voiture, incluez également ces informations
+                if ($item->voiture->client) {
+                    $item->client_details = [
+                        'nom' => $item->voiture->client->nom,
+                        'prenom' => $item->voiture->client->prenom,
+                        // Ajoutez d'autres champs nécessaires du client
+                    ];
+                }
             }
+    
             return $item;
         });
-
+    
         return response()->json(['data' => $rendezvousTransformed]);
-
-                // Transformer les données avant de les retourner, notamment décoder le champ 'services'
-
     }
 
     public function getRdvConfirme(Request $request)
     {
-        // Vous pouvez ajouter des filtres supplémentaires ici si nécessaire
-        $rendezvous = RendezVous::whereIn('id_Statut', [1])->get();
 
+        $rendezvous = RendezVous::whereIn('id_Statut', [1])
+        ->with('voiture.client')
+        ->get();
+    
+        // Transformer les données pour inclure les informations de la voiture et du client
         $rendezvousTransformed = $rendezvous->map(function ($item) {
-            if (isset($item->services)) {
-                $item->services = json_decode($item->services, true);
+            // Décodez le champ 'services' si nécessaire
+            $item->services = isset($item->services) ? json_decode($item->services, true) : null;
+            $item->tel = $item->voiture->client->telephone;
+            // Ajouter des informations de la voiture et du client directement à l'objet de rendez-vous
+            if ($item->voiture) { 
+                $item->voiture_details = [
+                    'marque' => $item->voiture->marque,
+                    'modele' => $item->voiture->modele,
+                    // Ajoutez d'autres champs nécessaires de la voiture
+                ];
+                // Si le client est chargé via la voiture, incluez également ces informations
+                if ($item->voiture->client) {
+                    $item->client_details = [
+                        'nom' => $item->voiture->client->nom,
+                        'prenom' => $item->voiture->client->prenom,
+                        // Ajoutez d'autres champs nécessaires du client
+                    ];
+                }
             }
+    
             return $item;
         });
-
+    
         return response()->json(['data' => $rendezvousTransformed]);
     }
 
     public function getRdvNonConfirme(Request $request)
     {
-        // Vous pouvez ajouter des filtres supplémentaires ici si nécessaire
-        $rendezvous = RendezVous::whereIn('id_Statut', [2])->get();
-
+        $rendezvous = RendezVous::whereIn('id_Statut', [2])
+        ->with('voiture.client')
+        ->get();
+    
+        // Transformer les données pour inclure les informations de la voiture et du client
         $rendezvousTransformed = $rendezvous->map(function ($item) {
-            if (isset($item->services)) {
-                $item->services = json_decode($item->services, true);
+            // Décodez le champ 'services' si nécessaire
+            $item->services = isset($item->services) ? json_decode($item->services, true) : null;
+            $item->tel = $item->voiture->client->telephone;
+            // Ajouter des informations de la voiture et du client directement à l'objet de rendez-vous
+            if ($item->voiture) { 
+                $item->voiture_details = [
+                    'marque' => $item->voiture->marque,
+                    'modele' => $item->voiture->modele,
+                    // Ajoutez d'autres champs nécessaires de la voiture
+                ];
+                // Si le client est chargé via la voiture, incluez également ces informations
+                if ($item->voiture->client) {
+                    $item->client_details = [
+                        'nom' => $item->voiture->client->nom,
+                        'prenom' => $item->voiture->client->prenom,
+                        // Ajoutez d'autres champs nécessaires du client
+                    ];
+                }
             }
+    
             return $item;
         });
-
+    
         return response()->json(['data' => $rendezvousTransformed]);
     }
     
@@ -213,6 +268,20 @@ class RendezVousController extends Controller
 
         // Retourner une réponse
         return response()->json(['message' => 'Rendez-vous confirmé avec succès', 'data' => $rendezvous]);
+    }
+    public function terminerRendezVous($id)
+    {
+        // Trouver le rendez-vous par son ID
+        $rendezvous = RendezVous::findOrFail($id);
+
+        // Mettre à jour le statut du rendez-vous à "Confirmé"
+        $rendezvous->id_Statut = 4; // ID 1 pour "Confirmé", selon vos seeds
+
+        // Sauvegarder les changements
+        $rendezvous->save();
+
+        // Retourner une réponse
+        return response()->json(['message' => 'Rendez-vous terminé avec succès', 'data' => $rendezvous]);
     }
     
 }
