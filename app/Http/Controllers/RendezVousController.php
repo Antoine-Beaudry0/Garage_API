@@ -45,7 +45,45 @@ class RendezVousController extends Controller
     
         return response()->json(['data' => $rendezvousTransformed]);
     }
-    
+
+    public function getRdvClient(Request $request)
+    {
+        // Récupère l'utilisateur actuellement authentifié
+        $user = Auth::guard('client')->user();
+        // Vérifie si un utilisateur est bien authentifié
+        if (!$user) {
+            return response()->json(['message' => 'Utilisateur non authentifié'], 401);
+        }
+
+        // Récupère tous les rendez-vous liés aux voitures de l'utilisateur connecté
+        $rendezvous = RendezVous::whereHas('voiture', function ($query) use ($user) {
+            $query->whereHas('client', function ($query) use ($user) {
+                $query->where('id', $user->id);
+            });
+        })->with(['voiture.client'])->get();
+
+        // Transformer les données pour inclure les informations de la voiture et du client
+        $rendezvousTransformed = $rendezvous->map(function ($item) {
+            $item->services = json_decode($item->services, true);
+            return [
+                'id' => $item->id,
+                'services' => $item->services,
+                'dateHeureDebut' => $item->dateHeureDebut,
+                'dateHeureFin' => $item->dateHeureFin,
+                'commentaire' => $item->commentaire,
+                'voiture_details' => [
+                    'marque' => $item->voiture->marque,
+                    'modele' => $item->voiture->modele,
+                ],
+                'client_details' => [
+                    'nom' => $item->voiture->client->nom,
+                    'prenom' => $item->voiture->client->prenom,
+                ]
+            ];
+        });
+
+        return response()->json(['data' => $rendezvousTransformed]);
+    }    
 
     // Créer un nouveau rendez-vous
     public function store(Request $request)
@@ -281,7 +319,7 @@ class RendezVousController extends Controller
         $rendezvous->save();
 
         // Retourner une réponse
-        return response()->json(['message' => 'Rendez-vous terminé avec succès', 'data' => $rendezvous]);
+        return response()->json(['message' => 'Rendez-vous terminé avec succès']);
     }
     
 }

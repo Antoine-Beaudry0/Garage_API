@@ -48,6 +48,11 @@ return [
             'driver' => 'jwt',
             'provider' => 'garagistes',
         ],
+        'api' => [
+            'driver' => 'jwt', // Assure-toi que c'est 'jwt' si tu utilises jwt-auth
+            'provider' => 'users',
+            'hash' => false,
+        ],
     ],
     /*
     |--------------------------------------------------------------------------

@@ -38,6 +38,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::POST('/loginuser',[ClientsController::class,'login']);
 Route::POST('/logingarage',[GaragistesController::class,'login']);
 Route::post('/logout', [GaragistesController::class, 'logout']);
+Route::middleware('auth:client')->get('/rendezvous/client', [RendezVousController::class, 'getRdvClient']);
+
 
 // Routes for Notifications
 Route::prefix('notifications')->group(function () {
@@ -56,10 +58,10 @@ Route::prefix('rendezvous')->group(function () {
         Route::get('/encours', [RendezVousController::class, 'getRdvEnCours']);
         Route::get('/confirme', [RendezVousController::class, 'getRdvConfirme']);
         Route::get('/nonconfirme', [RendezVousController::class, 'getRdvNonConfirme']);
-        Route::get('/confirmer', [RendezVousController::class, 'confirmerRendezVous']);
         Route::get('/{id}', [RendezVousController::class, 'show']);
         Route::put('/{id}', [RendezVousController::class, 'update']);
         Route::delete('/{id}', [RendezVousController::class, 'destroy']);
+        Route::get('/confirmer', [RendezVousController::class, 'confirmerRendezVous']);
         Route::patch('/confirmer/{id}', [RendezVousController::class, 'confirmerRendezVous']);
         Route::patch('/terminer/{id}', [RendezVousController::class, 'terminerRendezVous']);
 });

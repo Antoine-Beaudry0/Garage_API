@@ -12,8 +12,8 @@ class VoituresSeeder extends Seeder
     {
         $voitures = [
             ['marque' => 'Toyota', 'modele' => 'Corolla', 'annee' => 2020, 'code_SN' => 'SN001', 'id_client' => 1],
-            ['marque' => 'Honda', 'modele' => 'Civic', 'annee' => 2019, 'code_SN' => 'SN002', 'id_client' => 2],
-            ['marque' => 'Ford', 'modele' => 'Fiesta', 'annee' => 2018, 'code_SN' => 'SN003', 'id_client' => 3],
+            ['marque' => 'Honda', 'modele' => 'Civic', 'annee' => 2019, 'code_SN' => 'SN002', 'id_client' => 1],
+            ['marque' => 'Ford', 'modele' => 'Fiesta', 'annee' => 2018, 'code_SN' => 'SN003', 'id_client' => 1],
             ['marque' => 'Peugeot', 'modele' => '208', 'annee' => 2020, 'code_SN' => 'SN004', 'id_client' => 4],
             ['marque' => 'Renault', 'modele' => 'Clio', 'annee' => 2019, 'code_SN' => 'SN005', 'id_client' => 5],
             ['marque' => 'Volkswagen', 'modele' => 'Golf', 'annee' => 2018, 'code_SN' => 'SN006', 'id_client' => 6],
